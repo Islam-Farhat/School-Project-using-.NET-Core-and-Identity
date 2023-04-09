@@ -10,7 +10,7 @@ namespace SchoolSystem.Repository
         public LevelService(IRepository<Level> classRepository)
         {
             _levelRepository = classRepository;
-            //for test
+           
         }
 
         public List<Level> GetAllLevels()

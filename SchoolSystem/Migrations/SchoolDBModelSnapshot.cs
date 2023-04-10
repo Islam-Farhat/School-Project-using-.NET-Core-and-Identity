@@ -269,7 +269,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasIndex("userID_fk");
 
-                    b.ToTable("Attendances");
+                    b.ToTable("Attendances", (string)null);
                 });
 
             modelBuilder.Entity("SchoolSystem.Models.Classes", b =>
@@ -294,7 +294,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasIndex("levelID_fk");
 
-                    b.ToTable("Classes");
+                    b.ToTable("Classes", (string)null);
                 });
 
             modelBuilder.Entity("SchoolSystem.Models.Feedback", b =>
@@ -321,7 +321,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasIndex("userID_fk");
 
-                    b.ToTable("Feedbacks");
+                    b.ToTable("Feedbacks", (string)null);
                 });
 
             modelBuilder.Entity("SchoolSystem.Models.Holiday", b =>
@@ -354,7 +354,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasIndex("userID_fk");
 
-                    b.ToTable("Holidays");
+                    b.ToTable("Holidays", (string)null);
                 });
 
             modelBuilder.Entity("SchoolSystem.Models.Level", b =>
@@ -371,7 +371,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Levels");
+                    b.ToTable("Levels", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

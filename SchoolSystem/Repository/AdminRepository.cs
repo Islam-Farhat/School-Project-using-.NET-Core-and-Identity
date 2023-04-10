@@ -4,7 +4,7 @@ using SchoolSystem.ViewModels;
 
 namespace SchoolSystem.Repository
 {
-    public class AdminRepository:IAdminRepository
+    public class AdminRepository : IAdminRepository
     {
         SchoolDB context;
         private readonly UserManager<ApplicationUser> userManager;
@@ -29,7 +29,7 @@ namespace SchoolSystem.Repository
             teacher.Gender = (Models.Gender)teacherVM.Gender;
             teacher.PasswordHash = teacherVM.Password;
 
-            IdentityResult result =await userManager.CreateAsync(teacher,teacher.PasswordHash);
+            IdentityResult result = await userManager.CreateAsync(teacher, teacher.PasswordHash);
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(teacher, "Admin");
@@ -38,6 +38,42 @@ namespace SchoolSystem.Repository
             }
             else
                 return false;
+        }
+
+        public async Task<bool> AddStudent(StudentViewModel studentVM)
+        {
+            ApplicationUser student = new ApplicationUser();
+            student.Name = studentVM.Name;
+            student.Email = studentVM.Email;
+            student.UserName = studentVM.UserName;
+            student.Address = studentVM.Address;
+            student.PhoneNumber = studentVM.Phone;
+            student.photoUrl = studentVM.Photo.FileName;
+            student.BirthDate = studentVM.BirthDate;
+            student.Gender = (Models.Gender)studentVM.Gender;
+            student.PasswordHash = studentVM.Password;
+            student.levelID_fk = studentVM.levelID_fk;
+            student.classID_fk = studentVM.classID_fk;
+
+            IdentityResult result = await userManager.CreateAsync(student, student.PasswordHash);
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(student, "Student");
+                await signInManager.SignInAsync(student, isPersistent: false);
+                return true;
+            }
+            else
+                return false;
+        }
+
+        //I will replace them when we create level repo and class repo
+        public async Task<List<Classes>> GetClasses()
+        {
+            return context.Classes.ToList();
+        }
+        public async Task<List<Level>> GetLevels()
+        {
+            return context.Levels.ToList();
         }
     }
 }

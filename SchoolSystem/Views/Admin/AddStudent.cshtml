@@ -1,10 +1,12 @@
-﻿@model TeacherViewModel
+﻿@model StudentViewModel
 @{
-    ViewData["Title"] = "AddTeacher";
-    Layout = "~/views/shared/_adminlayout.cshtml";
+    ViewData["Title"] = "AddStudent";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    SelectList levels = new SelectList(Model.Levels, "Id", "Name");
+    SelectList classes = new SelectList(Model.Classes, "Id", "Name");
 }
 
-<form method="post" asp-action="AddTeacher" enctype="multipart/form-data" class="shadow-lg border p-3 col-md-10 col-lg-6 offset-md-1 offset-lg-3 col-sm-12  mt-5">
+<form method="post" asp-action="AddStudent" enctype="multipart/form-data" class="shadow-lg border p-3 col-md-10 col-lg-6 offset-md-1 offset-lg-3 col-sm-12  mt-5">
 
 
     <h2 class="my-3 text-center"><span class="text-danger" style="font-size: 40px;">A</span>dd <span class="text-danger">T</span>eacher</h2>
@@ -39,6 +41,9 @@
     </div>
     <span asp-validation-for="Photo" class="text-danger"></span>
 
+    <select class="form-control my-2  justify-content-center" asp-for="levelID_fk" asp-items="levels"></select>
+    <select class="form-control my-2  justify-content-center" asp-for="classID_fk" asp-items="classes"></select>
+
     <input asp-for="Password" class="form-control my-2  justify-content-center" type="password" id="" placeholder="Password">
     <span asp-validation-for="Password" class="text-danger"></span>
 
@@ -62,3 +67,5 @@
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
+
+

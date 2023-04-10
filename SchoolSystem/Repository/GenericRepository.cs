@@ -44,7 +44,6 @@ namespace App.Repos
             if (entityToDelete != null)
             {
                 _context.Remove(entityToDelete);
-                Save();
             }
         }
 

@@ -12,8 +12,10 @@ namespace SchoolSystem.Controllers
     {
         private readonly IRepository<Attendance> _attendanceRepository;
         private readonly IUserRepo _userRepository;
-        private readonly ILevelService _levelService;
 
+
+
+        private readonly ILevelService _levelService;
         public AttendanceController(IRepository<Attendance> attendanceRepository, IUserRepo userRepository,ILevelService levelService)
         {
             _attendanceRepository = attendanceRepository;
@@ -22,41 +24,8 @@ namespace SchoolSystem.Controllers
         }
 
 
-        public async Task<IActionResult> TakeAttendance(int classId, int levelId)
-        {
-            var students =  await _userRepository.GetStudentsByClassAndLevelAsync(classId, levelId);
-            List<Attendance> attendanceList = new List<Attendance>();
-            foreach (var student in students)
-            {
-                var attendance = new Attendance();
-                attendance.userID_fk = student.Id;
-                attendance.AttendanceStatus = student.attendanceStatus;
-                attendanceList.Add(attendance);
-            }
-
-            return View(attendanceList);
-        }
-
-
-        [HttpPost]
-        public ActionResult TakeAttendance(List<Attendance> attendanceList)
-        {
-            foreach (var attendance in attendanceList)
-            {
-                _attendanceRepository.Insert(attendance);
-            }
-
-            _attendanceRepository.Save();
-
-            return RedirectToAction("Index");
-        }
-        [HttpGet]
-        public IActionResult GetClassessByLevelID(int id)
-        {
-            List<Classes> classes=_levelService.GetLevelById(id).Classes;
-
-            return Json(classes);
-        }
+      
+      
 
 
         // GET: AttendanceController
@@ -65,86 +34,84 @@ namespace SchoolSystem.Controllers
             return View();
         }
 
-
-        // GET: AttendanceController/Create
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult StudentsReports ()
         {
-            AttendanceViewModel vm = new AttendanceViewModel();
+            SelectStudentsViewModel vm = new SelectStudentsViewModel();
             vm.levels = _levelService.GetAllLevels();
-
             return View(vm);
         }
 
-        // POST: AttendanceController/Create
-
-        // [ValidateAntiForgeryToken]
-        [HttpPost]
-        public ActionResult Create(List<Attendance> attendances)
+        public async Task<IActionResult> ShowStudentReports(int classId, int levelId)
         {
-             if (ModelState.IsValid)
+            var students = await _userRepository.GetStudentsByClassAndLevelAsync(classId, levelId);
+            return PartialView(students);
+        }
+
+
+        [HttpGet]
+        public ActionResult AttendancePage ()
+        {
+            SelectStudentsViewModel vm = new SelectStudentsViewModel();
+            vm.levels = _levelService.GetAllLevels();
+            return View(vm);
+        }
+
+        public async Task<IActionResult> TakeAttendance(int classId, int levelId)
+        {
+            var students = await _userRepository.GetStudentsByClassAndLevelAsync(classId, levelId);
+            return PartialView("TakeAttendance", students);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult TakeAttendance(List<ApplicationUser> students)
+        {
+
+            if (ModelState.IsValid)
             {
-                foreach (Attendance attendance in attendances) {
+
+                var attendanceStatuses = Request.Form["AttendanceStatus"];
+                var studentIds = Request.Form["student.Id"];
+
+                for (int i = 0; i < attendanceStatuses.Count; i++)
+                {
+                    Attendance attendance = new Attendance();
+                    AttendanceStatus status;
+                    if (Enum.TryParse(attendanceStatuses[i], out status))
+                    {
+                        attendance.AttendanceStatus = status;
+                    }
+                    else
+                    {
+                        attendance.AttendanceStatus = AttendanceStatus.Present;
+                       
+                    }
+
+                    attendance.userID_fk = studentIds[i];
                     _attendanceRepository.Insert(attendance);
                 }
 
+                _attendanceRepository.Save();
+
+
                 return RedirectToAction("Index", "Home");
-
             }
-            AttendanceViewModel vm = new AttendanceViewModel();
-            vm.levels = _levelService.GetAllLevels();
 
+            return PartialView("TakeAttendance", students);
 
-            return View(vm);
         }
 
-        // GET: AttendanceController/Edit/5
-        public ActionResult Edit(int id)
+
+
+        [HttpGet]
+        public IActionResult GetClassessByLevelID(int id)
         {
-            return View();
+            List<Classes> classes = _levelService.GetLevelById(id).Classes;
+
+            return Json(classes);
         }
 
-        // POST: AttendanceController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AttendanceController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AttendanceController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-        // GET: AttendanceController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
     }
 }

@@ -11,7 +11,7 @@ namespace SchoolSystem.Models
     {
         public int Id { get; set; }
 
-        public DateTime Date = DateTime.Now;
+        public DateTime Date { get; set; } = DateTime.Now;
         public AttendanceStatus AttendanceStatus { get; set;}
 
         [ForeignKey("ApplicationUser")]

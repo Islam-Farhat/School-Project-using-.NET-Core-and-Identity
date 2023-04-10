@@ -34,7 +34,7 @@ namespace App.Repos
 
         public void Update(T entity)
         {
-            context.Update(entity);
+            _dbSet.Update(entity);
             
         }
 
@@ -43,7 +43,7 @@ namespace App.Repos
             T entityToDelete =GetById(id);
             if (entityToDelete != null)
             {
-                _context.Remove(entityToDelete);
+                _dbSet.Remove(entityToDelete);
             }
         }
 

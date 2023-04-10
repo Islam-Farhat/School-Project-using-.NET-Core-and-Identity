@@ -32,7 +32,7 @@ namespace SchoolSystem.Controllers
            
             if (ModelState.IsValid)
             {
-                ApplicationUser user = new ApplicationUser { UserName = model.UserName, Email = model.Email,Name=model.Name,PhoneNumber=model.PhoneNumber,Address = model.Address,Gender=model.Gender,BirthDate=model.BirthDate ,photoUrl=model.photoUrl};
+                ApplicationUser user = new ApplicationUser { UserName = model.UserName, Email = model.Email,Name=model.Name,PhoneNumber=model.PhoneNumber,Address = model.Address,Gender= (Models.Gender)model.Gender,BirthDate=model.BirthDate ,photoUrl=model.photoUrl};
               
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)

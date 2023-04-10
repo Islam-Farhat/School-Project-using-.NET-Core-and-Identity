@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SchoolSystem.Models;
 using SchoolSystem.Repository;
+using SchoolSystem.Services;
 
 namespace SchoolSystem
 {
@@ -58,8 +59,9 @@ namespace SchoolSystem
             builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUserRepo, UserRepo>();
             builder.Services.AddScoped<ILevelService, LevelService>();
+            builder.Services.AddScoped< IAttendanceService,AttendanceService>();
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
-
+            
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 

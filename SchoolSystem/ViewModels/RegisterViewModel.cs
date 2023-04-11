@@ -34,6 +34,6 @@ namespace SchoolSystem.ViewModels
         public string Name { get; set; }
         public string photoUrl { get; set; }
         public Gender Gender { get; set; }
-        public AttendanceStatus attendanceStatus { get; set; } = AttendanceStatus.Present;
+        //public AttendanceStatus attendanceStatus { get; set; } = AttendanceStatus.Present;
     }
 }

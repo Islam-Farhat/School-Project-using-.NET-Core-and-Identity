@@ -22,7 +22,7 @@ namespace SchoolSystem.Services
         public async Task<List<Attendance>> GetAttendacesByDate(int levelId, int classId, DateTime date)
         {
             return await _attendanceRepository.GetAll()
-                .Where(a => a.Date == date && a.ApplicationUser.levelID_fk == levelId && a.ApplicationUser.classID_fk == classId)
+                .Where(a => a.Date.Year == date.Year && a.Date.Month == date.Month && a.Date.Day == date.Day && a.ApplicationUser.levelID_fk == levelId && a.ApplicationUser.classID_fk == classId)
                 .ToListAsync();
         }
 

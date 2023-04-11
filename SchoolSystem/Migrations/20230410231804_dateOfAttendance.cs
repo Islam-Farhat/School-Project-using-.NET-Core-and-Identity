@@ -11,8 +11,13 @@ namespace SchoolSystem.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+<<<<<<< HEAD
+        
+           
+=======
            
             
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
         }
 
         /// <inheritdoc />

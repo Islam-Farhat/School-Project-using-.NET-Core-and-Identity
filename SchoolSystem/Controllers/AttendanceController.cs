@@ -1,6 +1,7 @@
 ﻿using App.Repos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SchoolSystem.Migrations;
 using SchoolSystem.Models;
 using SchoolSystem.Repository;
 using SchoolSystem.Services;
@@ -12,13 +13,15 @@ namespace SchoolSystem.Controllers
     public class AttendanceController : Controller
     {
         private readonly IUserRepo _userRepository;
+        private readonly IHolidayService _holidayService;
         private readonly ILevelService _levelService;
         private readonly IAttendanceService _attendanceService;
-        public AttendanceController(IAttendanceService attendanceService, IUserRepo userRepository,ILevelService levelService)
+        public AttendanceController(IAttendanceService attendanceService, IUserRepo userRepository,ILevelService levelService, IHolidayService holidayService)
         {
             _attendanceService = attendanceService;
             _userRepository = userRepository;
             _levelService = levelService;
+            _holidayService = holidayService;
         }
 
 
@@ -27,6 +30,27 @@ namespace SchoolSystem.Controllers
         {
             return View();
         }
+        public IActionResult ShowHolidaysRequests()
+        {
+            List<Holiday> holidays = _holidayService.GetAllHolidays();
+            return View(holidays );
+
+        }
+        
+        public ActionResult HolidayRequestResponse(int id,int status)
+        {
+            Holiday holiday = _holidayService.GetHolidayById(id);
+            holiday.Status = (StatusType)status;
+            _holidayService.updateHoliday(holiday);
+            _holidayService.Save();
+
+            return RedirectToAction("ShowHolidaysRequests");
+        }
+
+
+
+
+
 
         [HttpGet]
         public ActionResult StudentsReports ()

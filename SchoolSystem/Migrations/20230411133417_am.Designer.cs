@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolSystem.Models;
 
@@ -11,9 +12,11 @@ using SchoolSystem.Models;
 namespace SchoolSystem.Migrations
 {
     [DbContext(typeof(SchoolDB))]
-    partial class SchoolDBModelSnapshot : ModelSnapshot
+    [Migration("20230411133417_am")]
+    partial class am
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -258,6 +261,9 @@ namespace SchoolSystem.Migrations
                     b.Property<int>("AttendanceStatus")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("userID_fk")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -266,7 +272,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasIndex("userID_fk");
 
-                    b.ToTable("Attendances", (string)null);
+                    b.ToTable("Attendances");
                 });
 
             modelBuilder.Entity("SchoolSystem.Models.Classes", b =>
@@ -291,7 +297,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasIndex("levelID_fk");
 
-                    b.ToTable("Classes", (string)null);
+                    b.ToTable("Classes");
                 });
 
             modelBuilder.Entity("SchoolSystem.Models.Feedback", b =>
@@ -317,7 +323,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasIndex("userID_fk");
 
-                    b.ToTable("Feedbacks", (string)null);
+                    b.ToTable("Feedbacks");
                 });
 
             modelBuilder.Entity("SchoolSystem.Models.Holiday", b =>
@@ -349,7 +355,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasIndex("userID_fk");
 
-                    b.ToTable("Holidays", (string)null);
+                    b.ToTable("Holidays");
                 });
 
             modelBuilder.Entity("SchoolSystem.Models.Level", b =>
@@ -366,7 +372,7 @@ namespace SchoolSystem.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Levels", (string)null);
+                    b.ToTable("Levels");
                 });
 
             modelBuilder.Entity("SchoolSystem.ViewModels.FeedbackViewModel", b =>
@@ -375,7 +381,7 @@ namespace SchoolSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("FeedbackViewModel", (string)null);
+                    b.ToTable("FeedbackViewModel");
                 });
 
             modelBuilder.Entity("SchoolSystem.ViewModels.HolidayViewModel", b =>

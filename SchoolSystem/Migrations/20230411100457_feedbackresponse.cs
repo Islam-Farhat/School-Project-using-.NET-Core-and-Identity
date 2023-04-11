@@ -10,27 +10,9 @@ namespace SchoolSystem.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "attendanceStatus",
-                table: "AspNetUsers");
+            
 
-            migrationBuilder.AlterColumn<int>(
-                name: "Status",
-                table: "Holidays",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.CreateTable(
-                name: "FeedbackViewModel",
-                columns: table => new
-                {
-                    FeedbackTxt = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                });
+           
         }
 
         /// <inheritdoc />

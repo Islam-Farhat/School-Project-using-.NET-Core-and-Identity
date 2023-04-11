@@ -9,5 +9,9 @@ namespace SchoolSystem.Repository
         Task<bool> AddStudent(StudentViewModel student);
         Task<List<Classes>> GetClasses();
         Task<List<Level>> GetLevels();
+        string GetLevelByID(int? id);
+        bool UpdateLevel(LevelViewModel level);
+        bool DeleteLevel(int? id);
+        Task<bool> AddLevel(LevelViewModel level);
     }
 }

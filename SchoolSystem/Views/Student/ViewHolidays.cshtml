@@ -1,0 +1,52 @@
+﻿@model IEnumerable<SchoolSystem.Models.Holiday>
+
+@{
+    ViewData["Title"] = "ViewHolidays";
+}
+
+<h1>ViewHolidays</h1>
+
+<p>
+    <a asp-action="ApplyHoliday">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Reason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DaysNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Reason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="EditHoliday" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="DeleteHoliday" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete?');">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

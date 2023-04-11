@@ -43,7 +43,7 @@ namespace App.Repos
             T entityToDelete =GetById(id);
             if (entityToDelete != null)
             {
-                _context.Remove(entityToDelete);
+                context.Remove(entityToDelete);
             }
         }
 

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolSystem.Models
 {
+    public enum StatusType { Pending,Rejected,Accepted}
     public class Holiday
     {
         public int  Id { get; set; }
@@ -11,7 +12,7 @@ namespace SchoolSystem.Models
         public int DaysNum { get; set; }
         [DataType(DataType.Date)]
         public DateTime StartDate { get; set; }
-        public string Status { get; set; }
+        public StatusType Status { get; set; }
         [ForeignKey("ApplicationUser")]
         public string userID_fk { get; set; }
         public virtual ApplicationUser ApplicationUser { get; set; }

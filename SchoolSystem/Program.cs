@@ -59,8 +59,13 @@ namespace SchoolSystem
             builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUserRepo, UserRepo>();
             builder.Services.AddScoped<ILevelService, LevelService>();
+<<<<<<< HEAD
+            builder.Services.AddScoped<IHolidayService, HolidayService>();
+            builder.Services.AddScoped< IAttendanceService,AttendanceService>();
+=======
             builder.Services.AddScoped<IAttendanceService,AttendanceService>();
             builder.Services.AddScoped<IClassService, ClassService>();
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             
             // Add services to the container.

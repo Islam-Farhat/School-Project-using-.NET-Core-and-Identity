@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SchoolSystem.Models;
 using SchoolSystem.Repository;
+using SchoolSystem.Services;
 using SchoolSystem.ViewModels;
 using System.Runtime.Intrinsics.X86;
 
@@ -10,22 +11,15 @@ namespace SchoolSystem.Controllers
 {
     public class AttendanceController : Controller
     {
-        private readonly IRepository<Attendance> _attendanceRepository;
         private readonly IUserRepo _userRepository;
-
-
-
         private readonly ILevelService _levelService;
-        public AttendanceController(IRepository<Attendance> attendanceRepository, IUserRepo userRepository,ILevelService levelService)
+        private readonly IAttendanceService _attendanceService;
+        public AttendanceController(IAttendanceService attendanceService, IUserRepo userRepository,ILevelService levelService)
         {
-            _attendanceRepository = attendanceRepository;
+            _attendanceService = attendanceService;
             _userRepository = userRepository;
             _levelService = levelService;
         }
-
-
-      
-      
 
 
         // GET: AttendanceController
@@ -63,15 +57,12 @@ namespace SchoolSystem.Controllers
             return PartialView("TakeAttendance", students);
         }
 
-
-
         [HttpPost]
         public ActionResult TakeAttendance(List<ApplicationUser> students)
         {
 
             if (ModelState.IsValid)
-            {
-
+            { 
                 var attendanceStatuses = Request.Form["AttendanceStatus"];
                 var studentIds = Request.Form["student.Id"];
 
@@ -90,11 +81,9 @@ namespace SchoolSystem.Controllers
                     }
 
                     attendance.userID_fk = studentIds[i];
-                    _attendanceRepository.Insert(attendance);
+                    _attendanceService.AddAttendance(attendance);
                 }
-
-                _attendanceRepository.Save();
-
+                _attendanceService.Save();
 
                 return RedirectToAction("Index", "Home");
             }
@@ -103,6 +92,43 @@ namespace SchoolSystem.Controllers
 
         }
 
+        public ActionResult AttendanceListLevels()
+        {
+            SelectStudentsViewModel vm = new SelectStudentsViewModel();
+            vm.levels = _levelService.GetAllLevels();
+            return View(vm);
+        }
+
+
+
+        public async Task<IActionResult> AttendanceList(int levelId, int classId, DateTime date)
+        {
+
+            var students = await _userRepository.GetStudentsByClassAndLevelAsync(classId, levelId);
+            var attendanceRecords = await _attendanceService.GetAttendacesByDate(levelId, classId, date);
+
+            var studentAttendanceList = new List<StudentAttendanceViewModel>();
+
+            foreach (var student in students)
+            {
+                var attendanceRecord = attendanceRecords.FirstOrDefault(a => a.userID_fk == student.Id);
+
+                var attendanceState = AttendanceStatus.Absent;
+                if (attendanceRecord != null)
+                {
+                    attendanceState = (AttendanceStatus)attendanceRecord.AttendanceStatus;
+                }
+
+                studentAttendanceList.Add(new StudentAttendanceViewModel
+                {
+                    Student = student,
+                    AttendanceStatus = attendanceState
+                });
+            }
+
+
+            return PartialView(studentAttendanceList);
+        }
 
 
         [HttpGet]

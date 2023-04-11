@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SchoolSystem.Models;
 
@@ -11,9 +12,11 @@ using SchoolSystem.Models;
 namespace SchoolSystem.Migrations
 {
     [DbContext(typeof(SchoolDB))]
-    partial class SchoolDBModelSnapshot : ModelSnapshot
+    [Migration("20230410231804_dateOfAttendance")]
+    partial class dateOfAttendance
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -310,6 +313,7 @@ namespace SchoolSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Response")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("userID_fk")
@@ -341,8 +345,9 @@ namespace SchoolSystem.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("userID_fk")
                         .IsRequired()
@@ -370,15 +375,6 @@ namespace SchoolSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Levels");
-                });
-
-            modelBuilder.Entity("SchoolSystem.ViewModels.FeedbackViewModel", b =>
-                {
-                    b.Property<string>("FeedbackTxt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.ToTable("FeedbackViewModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

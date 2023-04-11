@@ -8,12 +8,12 @@ namespace SchoolSystem.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IAdminRepository iadminRepository;
+        private readonly IAdminRepository adminRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public AdminController(IAdminRepository iadminRepository, IWebHostEnvironment webHostEnvironment)
         {
-            this.iadminRepository = iadminRepository;
+            this.adminRepository = iadminRepository;
             this._webHostEnvironment = webHostEnvironment;
         }
 
@@ -39,7 +39,7 @@ namespace SchoolSystem.Controllers
                     Photo.CopyTo(new FileStream(fullpath, FileMode.Create));
                 }
 
-                bool result = await iadminRepository.AddTeacher(teacherVM);
+                bool result = await adminRepository.AddTeacher(teacherVM);
                 if (result)
                 {
                     ViewBag.flag = true;
@@ -53,8 +53,8 @@ namespace SchoolSystem.Controllers
         public async Task<IActionResult> AddStudent()
         {
             StudentViewModel studentVM = new StudentViewModel();
-            studentVM.Classes = await iadminRepository.GetClasses();
-            studentVM.Levels = await iadminRepository.GetLevels();
+            studentVM.Classes = await adminRepository.GetClasses();
+            studentVM.Levels = await adminRepository.GetLevels();
             ViewBag.flag = false;
             return View(studentVM);
         }
@@ -65,6 +65,7 @@ namespace SchoolSystem.Controllers
             //ignore list levels and classes to make modelstate valid
             ModelState.Remove("Levels");
             ModelState.Remove("Classes");
+            ViewBag.flag = false;
 
             if (ModelState.IsValid)
             {
@@ -78,7 +79,7 @@ namespace SchoolSystem.Controllers
                     Photo.CopyTo(new FileStream(fullpath, FileMode.Create));
                 }
 
-                bool result = await iadminRepository.AddStudent(studentVM);
+                bool result = await adminRepository.AddStudent(studentVM);
                 if (result)
                 {
                     ViewBag.flag = true;
@@ -87,6 +88,66 @@ namespace SchoolSystem.Controllers
             }
 
             return RedirectToAction("AddStudent");
+        }
+
+        public IActionResult AddLevel()
+        {
+            ViewBag.flag = false;
+            return View();
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> AddLevel(LevelViewModel level)
+        {
+            ModelState.Remove("Id");
+            ViewBag.flag = false;
+            if (ModelState.IsValid)
+            {
+                bool result = await adminRepository.AddLevel(level);
+                if (result == true)
+                {
+                    ViewBag.flag = true;
+                    return View();
+                }
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> GetAllLevels()
+        {
+            var result = await adminRepository.GetLevels();
+            return Json(result);
+        }
+
+        public IActionResult GetLevelByID(int? id)
+        {
+            var result = adminRepository.GetLevelByID(id);
+            return Json(result);
+        }
+
+        public IActionResult UpdateLevel(LevelViewModel levelVM)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = adminRepository.UpdateLevel(levelVM);
+                if (result)
+                    return Json("success");
+                else
+                    return Json("error");
+            }
+            return View(levelVM); 
+        }
+        public IActionResult DeleteLevel(int? id)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = adminRepository.DeleteLevel(id);
+                if (result)
+                    return Json("success");
+                else
+                    return Json("error");
+            }
+            return View();
         }
     }
 }

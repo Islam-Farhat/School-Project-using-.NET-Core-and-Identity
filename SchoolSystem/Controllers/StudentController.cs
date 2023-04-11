@@ -11,7 +11,7 @@ namespace SchoolSystem.Controllers
         private readonly IRepository<Holiday> _holidayRepository;
         private readonly IRepository<Feedback> _feedbackRepository;
         private readonly IAttendanceService _attendanceService;
-        private readonly string testUserId = "salma";//"4479b419-66ea-417d-9f04-2a83ea1cd27a";
+        private readonly string testUserId = "4479b419-66ea-417d-9f04-2a83ea1cd27a";
 
         public StudentController (IAttendanceService attendanceService,IRepository<Holiday> holidayRepository, IRepository<Feedback> feedbackRepository)
         {

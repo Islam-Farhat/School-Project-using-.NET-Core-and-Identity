@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SchoolSystem.ViewModels;
 
 namespace SchoolSystem.Models
 {
@@ -31,6 +32,10 @@ namespace SchoolSystem.Models
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<SchoolSystem.ViewModels.FeedbackViewModel> FeedbackViewModel { get; set; } = default!;
+
+        public DbSet<SchoolSystem.ViewModels.HolidayViewModel> HolidayViewModel { get; set; } = default!;
 
 
 

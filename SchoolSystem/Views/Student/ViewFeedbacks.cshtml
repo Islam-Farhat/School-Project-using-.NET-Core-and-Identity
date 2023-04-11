@@ -1,0 +1,40 @@
+﻿@model IEnumerable<SchoolSystem.Models.Feedback>
+
+@{
+    ViewData["Title"] = "ViewFeedbacks";
+}
+
+<h1>ViewFeedbacks</h1>
+
+<p>
+    <a asp-action="SendFeedback">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FeedbackText)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Response)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedbackText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Response)
+            </td>
+            <td>
+                <a asp-action="EditFeedback" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="DeleteFeedback" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete?');">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -37,9 +37,6 @@ namespace SchoolSystem.Repository
             _levelRepository.Delete(id);
         }
 
-       
-
-       
-       
+      
     }
 }

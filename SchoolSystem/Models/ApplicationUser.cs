@@ -19,8 +19,8 @@ namespace SchoolSystem.Models
 
         [ForeignKey("Level")]
         public int? levelID_fk { get; set; }
-        public AttendanceStatus attendanceStatus { get; set; } = AttendanceStatus.Present;
 
+        //public AttendanceStatus attendanceStatus { get; set; } = AttendanceStatus.Present;
 
         [ForeignKey("Classes")]
         public int? classID_fk { get; set; }

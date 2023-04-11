@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolSystem.Models
 {
@@ -6,6 +7,10 @@ namespace SchoolSystem.Models
     {
         public int  Id { get; set; }
         public string Reason { get; set; }
+        [Range(1,15)]
+        public int DaysNum { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime StartDate { get; set; }
         public string Status { get; set; }
         [ForeignKey("ApplicationUser")]
         public string userID_fk { get; set; }

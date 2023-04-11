@@ -1,0 +1,37 @@
+﻿@model List<StudentAttendanceViewModel>
+
+
+<table class="table">
+    <h2> Results: @Model.Count()</h2>
+    <thead>
+        <tr>
+
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">PhoneNumber</th>
+            <th scope="col">BirthDate</th>
+            <th scope="col">Gender</th>
+            <th scope="col">AttendanceState</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var studentAttendance in Model)
+        {
+            <tr>
+                <td>@studentAttendance.Student.photoUrl</td>
+                <td>@studentAttendance.Student.Name</td>
+                <td>@studentAttendance.Student.Email</td>
+                <td>@studentAttendance.Student.PhoneNumber</td>
+                <td>@studentAttendance.Student.BirthDate</td>
+                <td>@studentAttendance.Student.Gender</td>
+                <td>@studentAttendance.AttendanceStatus</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+

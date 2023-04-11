@@ -7,12 +7,12 @@ namespace App.Repos
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {
-        private readonly SchoolDB _context;
+        private readonly SchoolDB context;
         private readonly DbSet<T> _dbSet;
 
         public GenericRepository(SchoolDB context)
         {
-            _context = context;
+            this.context = context;
             _dbSet = context.Set<T>();
         }
 
@@ -34,7 +34,7 @@ namespace App.Repos
 
         public void Update(T entity)
         {
-            _context.Update(entity);
+            _dbSet.Update(entity);
             
         }
 
@@ -43,14 +43,13 @@ namespace App.Repos
             T entityToDelete =GetById(id);
             if (entityToDelete != null)
             {
-                _context.Remove(entityToDelete);
-                Save();
+                _dbSet.Remove(entityToDelete);
             }
         }
 
         public void Save()
         {
-            _context.SaveChanges();
+            context.SaveChanges();
         }
 
        

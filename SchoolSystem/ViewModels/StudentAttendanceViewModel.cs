@@ -2,9 +2,10 @@
 
 namespace SchoolSystem.ViewModels
 {
-    public class TableRowViewModel
+    public class StudentAttendanceViewModel
     {
-        public ApplicationUser ApplicationUser { get; set; }
+        public ApplicationUser Student { get; set; }
         public AttendanceStatus AttendanceStatus { get; set; }
+
     }
 }

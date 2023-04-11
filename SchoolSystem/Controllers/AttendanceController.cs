@@ -109,21 +109,28 @@ namespace SchoolSystem.Controllers
 
             var studentAttendanceList = new List<StudentAttendanceViewModel>();
 
-            foreach (var student in students)
+            if (attendanceRecords.Count >0 )
             {
-                var attendanceRecord = attendanceRecords.FirstOrDefault(a => a.userID_fk == student.Id);
-
-                var attendanceState = AttendanceStatus.Absent;
-                if (attendanceRecord != null)
+                foreach (var student in students)
                 {
-                    attendanceState = (AttendanceStatus)attendanceRecord.AttendanceStatus;
+                    var attendanceRecord = attendanceRecords.FirstOrDefault(a => a.userID_fk == student.Id);
+
+                    var attendanceState = AttendanceStatus.Absent;
+                    if (attendanceRecord != null)
+                    {
+                        attendanceState = (AttendanceStatus)attendanceRecord.AttendanceStatus;
+                    }
+
+                    studentAttendanceList.Add(new StudentAttendanceViewModel
+                    {
+                        Student = student,
+                        AttendanceStatus = attendanceState
+                    });
                 }
+            }
+            else{
 
-                studentAttendanceList.Add(new StudentAttendanceViewModel
-                {
-                    Student = student,
-                    AttendanceStatus = attendanceState
-                });
+                studentAttendanceList.Clear(); 
             }
 
 

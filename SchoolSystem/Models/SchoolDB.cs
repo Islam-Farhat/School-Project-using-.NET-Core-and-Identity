@@ -39,6 +39,8 @@ namespace SchoolSystem.Models
 
         public DbSet<SchoolSystem.ViewModels.StudentProfileViewModel> StudentProfileViewModel { get; set; } = default!;
 
+        public DbSet<SchoolSystem.ViewModels.UpdatePasswordViewModel> UpdatePasswordViewModel { get; set; } = default!;
+
 
 
     }

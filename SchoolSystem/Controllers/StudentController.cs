@@ -1,4 +1,5 @@
 ﻿using App.Repos;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SchoolSystem.Models;
 using SchoolSystem.Repository;
@@ -16,9 +17,11 @@ namespace SchoolSystem.Controllers
         private readonly ILevelService _levelService;
         private readonly IClassService _classService;
         private readonly IRepository<ApplicationUser> _applicationUserRepository;
-        private readonly string testUserId = "4479b419-66ea-417d-9f04-2a83ea1cd27a";
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly string testUserId = "8c05fd9d-cd61-4124-893a-c97657c8a17a";
 
-        public StudentController (IClassService classService, ILevelService levelService, IUserRepo userRepo, IAttendanceService attendanceService, IRepository<Holiday> holidayRepository, IRepository<Feedback> feedbackRepository, IRepository<ApplicationUser> applicationUserRepository)
+        public StudentController (SignInManager<ApplicationUser> signInManager,UserManager<ApplicationUser> userManager,IClassService classService, ILevelService levelService, IUserRepo userRepo, IAttendanceService attendanceService, IRepository<Holiday> holidayRepository, IRepository<Feedback> feedbackRepository, IRepository<ApplicationUser> applicationUserRepository)
         {
             _holidayRepository = holidayRepository;
             _feedbackRepository = feedbackRepository;
@@ -27,6 +30,8 @@ namespace SchoolSystem.Controllers
             _classService = classService;
             _userRepo = userRepo;
             _applicationUserRepository = applicationUserRepository;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public IActionResult AttendanceReportMonth()
@@ -177,10 +182,31 @@ namespace SchoolSystem.Controllers
             }
             return View(studentProfileVM);
         }
-        //public IActionResult UpdatePassword()
-        //{
-        //    return View();
-        //}
+        public IActionResult UpdatePassword()
+        {
+            
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> UpdatePassword(UpdatePasswordViewModel updatePasswordVM)
+        {
+            if (ModelState.IsValid)
+            {
+                ApplicationUser student = await _userRepo.GetStudentByIdAsync(testUserId);
+                var result = await _userManager.ChangePasswordAsync(student, updatePasswordVM.OldPassword, updatePasswordVM.NewPassword);
+                if (result.Succeeded)
+                {
+                    await _signInManager.RefreshSignInAsync(student);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                    foreach (var error in result.Errors)
+                        ModelState.AddModelError("", error.Description);
+
+            }
+            return View(updatePasswordVM);
+        }
 
 
 

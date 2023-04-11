@@ -36,6 +36,11 @@ namespace SchoolSystem.Repository
         {
             _levelRepository.Delete(id);
         }
+        public string GetLevelName(int id)
+        {
+            Level level = _levelRepository.GetById(id);
+            return level.Name;
+        }
 
       
     }

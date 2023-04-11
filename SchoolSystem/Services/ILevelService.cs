@@ -10,6 +10,7 @@ namespace SchoolSystem.Repository
         void AddLevel(Level level);
         void UpdateLevel(Level level);
         void DeleteLevel(int id);
+        public string GetLevelName(int id);
 
     }
 }

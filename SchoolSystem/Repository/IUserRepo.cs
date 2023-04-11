@@ -6,7 +6,9 @@ namespace SchoolSystem.Repository
     {
         Task<List<ApplicationUser>> GetUsersInRoleAsync(string roleName);
         Task<List<ApplicationUser>> GetStudentsByClassAndLevelAsync(int classId, int levelId);
-       
-    
+        Task<ApplicationUser> GetStudentByIdAsync(string id);
+
+
+
     }
 }

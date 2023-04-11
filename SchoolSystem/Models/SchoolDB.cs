@@ -37,6 +37,8 @@ namespace SchoolSystem.Models
 
         public DbSet<SchoolSystem.ViewModels.HolidayViewModel> HolidayViewModel { get; set; } = default!;
 
+        public DbSet<SchoolSystem.ViewModels.StudentProfileViewModel> StudentProfileViewModel { get; set; } = default!;
+
 
 
     }

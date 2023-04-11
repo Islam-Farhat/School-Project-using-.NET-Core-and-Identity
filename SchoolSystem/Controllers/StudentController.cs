@@ -1,6 +1,7 @@
 ﻿using App.Repos;
 using Microsoft.AspNetCore.Mvc;
 using SchoolSystem.Models;
+using SchoolSystem.Repository;
 using SchoolSystem.Services;
 using SchoolSystem.ViewModels;
 
@@ -11,13 +12,21 @@ namespace SchoolSystem.Controllers
         private readonly IRepository<Holiday> _holidayRepository;
         private readonly IRepository<Feedback> _feedbackRepository;
         private readonly IAttendanceService _attendanceService;
+        private readonly IUserRepo _userRepo;
+        private readonly ILevelService _levelService;
+        private readonly IClassService _classService;
+        private readonly IRepository<ApplicationUser> _applicationUserRepository;
         private readonly string testUserId = "4479b419-66ea-417d-9f04-2a83ea1cd27a";
 
-        public StudentController (IAttendanceService attendanceService,IRepository<Holiday> holidayRepository, IRepository<Feedback> feedbackRepository)
+        public StudentController (IClassService classService, ILevelService levelService, IUserRepo userRepo, IAttendanceService attendanceService, IRepository<Holiday> holidayRepository, IRepository<Feedback> feedbackRepository, IRepository<ApplicationUser> applicationUserRepository)
         {
             _holidayRepository = holidayRepository;
             _feedbackRepository = feedbackRepository;
             _attendanceService = attendanceService;
+            _levelService = levelService;
+            _classService = classService;
+            _userRepo = userRepo;
+            _applicationUserRepository = applicationUserRepository;
         }
 
         public IActionResult AttendanceReportMonth()
@@ -141,10 +150,33 @@ namespace SchoolSystem.Controllers
             return View(holidayVM);
         }
 
-        //public IActionResult UpdateProfile()
-        //{
-        //    return View();
-        //}
+        public async Task<IActionResult> UpdateProfile()
+        {
+            var student = await _userRepo.GetStudentByIdAsync(testUserId);
+            StudentProfileViewModel studentProfileVM = new StudentProfileViewModel();
+            studentProfileVM.Name = student.Name;
+            studentProfileVM.Address =student.Address;
+            studentProfileVM.Phone = student.PhoneNumber;
+            studentProfileVM.Email = student.Email;
+            //studentProfileVM.Photo = student.PhotoUrl;
+            return View(studentProfileVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile(StudentProfileViewModel studentProfileVM)
+        {
+            if(ModelState.IsValid)
+            {
+                ApplicationUser student = await _userRepo.GetStudentByIdAsync(testUserId);
+                student.Address = studentProfileVM.Address;
+                student.PhoneNumber = studentProfileVM.Phone;
+                student.Email = studentProfileVM.Email;
+                //student.Photo = studentProfileVM.PhotoUrl;
+                _applicationUserRepository.Update(student);
+                _applicationUserRepository.Save();
+                return RedirectToAction("AttendanceReportMonth");
+            }
+            return View(studentProfileVM);
+        }
         //public IActionResult UpdatePassword()
         //{
         //    return View();

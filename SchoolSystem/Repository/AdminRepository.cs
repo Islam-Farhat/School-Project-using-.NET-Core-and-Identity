@@ -68,7 +68,32 @@ namespace SchoolSystem.Repository
             else
                 return false;
         }
+        public bool UpdateStudent(StudentViewModel studentVM)
+        {
+            try
+            {
+                ApplicationUser student = new ApplicationUser();
+                student.Name = studentVM.Name;
+                student.Email = studentVM.Email;
+                student.UserName = studentVM.UserName;
+                student.Address = studentVM.Address;
+                student.PhoneNumber = studentVM.Phone;
+               // student.photoUrl = studentVM.Photo.FileName;
+                student.BirthDate = studentVM.BirthDate;
+                student.Gender = studentVM.Gender;
+                student.PasswordHash = studentVM.Password;
+                student.levelID_fk = studentVM.levelID_fk;
+                student.classID_fk = studentVM.classID_fk;
 
+                userManager.UpdateAsync(student);
+                context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
         public List<FeedbackVM> GetFeedbacks()
         {
             var list= context.Feedbacks.Select(x => new {x.Id,x.FeedbackText,x.Response,StudentName=x.ApplicationUser.Name}).ToList();
@@ -100,6 +125,30 @@ namespace SchoolSystem.Repository
                 return false;
             }
 
+        }
+
+        public async Task<StudentViewModel> GetStudentByID(StudentViewModel studentVM)
+        {
+            var students = await userManager.GetUsersInRoleAsync("Student");
+            var student = students.Where(x => x.Id == studentVM.Id).FirstOrDefault();
+
+            if (student != null) 
+            {
+                // student.photoUrl = studentVM.Photo.FileName;
+                studentVM.Id = student.Id;
+                studentVM.Name = student.Name;
+                studentVM.Email = student.Email;
+                studentVM.UserName = student.UserName;
+                studentVM.Address = student.Address;
+                studentVM.Phone = student.PhoneNumber;
+                studentVM.BirthDate = student.BirthDate;
+                studentVM.Gender = student.Gender;
+                studentVM.Password = student.PasswordHash;
+                studentVM.levelID_fk = student.levelID_fk;
+                studentVM.classID_fk = student.classID_fk;
+            }
+
+            return studentVM;
         }
     }
 }

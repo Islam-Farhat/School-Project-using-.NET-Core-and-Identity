@@ -13,7 +13,7 @@ namespace SchoolSystem.Controllers
         private readonly IlevelRepository ilevelRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AdminController(IAdminRepository iadminRepository,IClassRepository iclassRepository,IlevelRepository ilevelRepository , IWebHostEnvironment webHostEnvironment)
+        public AdminController(IAdminRepository iadminRepository, IClassRepository iclassRepository, IlevelRepository ilevelRepository, IWebHostEnvironment webHostEnvironment)
         {
             this.iadminRepository = iadminRepository;
             this.iclassRepository = iclassRepository;
@@ -63,12 +63,14 @@ namespace SchoolSystem.Controllers
             return View(studentVM);
         }
 
+
         [HttpPost]
         public async Task<IActionResult> AddStudent(StudentViewModel studentVM, IFormFile Photo)
         {
             //ignore list levels and classes to make modelstate valid
             ModelState.Remove("Levels");
             ModelState.Remove("Classes");
+            ModelState.Remove("Id");
             ViewBag.flag = false;
 
             if (ModelState.IsValid)
@@ -93,7 +95,43 @@ namespace SchoolSystem.Controllers
 
             return RedirectToAction("AddStudent");
         }
+        
+        //test: 7dbbee52-2d44-4968-846e-74eef55c88fe
+        public async Task<IActionResult> EditStudent(StudentViewModel studentVM)
+        {
+            var student = await iadminRepository.GetStudentByID(studentVM);
+            student.Levels = await ilevelRepository.GetLevels();
+            student.Classes = await iclassRepository.GetClasses();
+            return View(student);
+        }
 
+        [HttpPost]
+        public IActionResult EditStudent(StudentViewModel studentVM, IFormFile Photo)
+        {
+            ModelState.Remove("Photo");
+            ModelState.Remove("Gender");
+            ModelState.Remove("Password");
+            ModelState.Remove("ConfirmPassword");
+            ModelState.Remove("Levels");
+            ModelState.Remove("Classes");
+            if (ModelState.IsValid)
+            {
+                string filename = string.Empty;
+                if (Photo != null)
+                {
+                    string uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+                    filename = Photo.FileName;
+                    string fullpath = Path.Combine(uploads, filename);
+                    Photo.CopyTo(new FileStream(fullpath, FileMode.Create));
+                }
+
+                bool result = iadminRepository.UpdateStudent(studentVM);
+                if (result)
+                    return RedirectToAction("ShowStudentReports", "AttendanceController");
+                    
+            }
+            return RedirectToAction("EditStudent");
+        }
 
         //Level Actions
         public IActionResult AddLevel()
@@ -101,7 +139,7 @@ namespace SchoolSystem.Controllers
             ViewBag.flag = false;
             return View();
         }
-        
+
         [HttpPost]
         public async Task<IActionResult> AddLevel(LevelViewModel levelVM)
         {
@@ -141,7 +179,7 @@ namespace SchoolSystem.Controllers
                 else
                     return Json("error");
             }
-            return View(levelVM); 
+            return View(levelVM);
         }
         public IActionResult DeleteLevel(int? id)
         {
@@ -227,7 +265,7 @@ namespace SchoolSystem.Controllers
         }
         public IActionResult Replay(int? id)
         {
-            if(id==null) 
+            if (id == null)
             {
                 return View();
             }
@@ -246,7 +284,7 @@ namespace SchoolSystem.Controllers
                     return RedirectToAction("Feedback");
                 }
             }
-            return View() ;
+            return View();
         }
     }
 }

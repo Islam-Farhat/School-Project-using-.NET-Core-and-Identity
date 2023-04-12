@@ -6,6 +6,7 @@ namespace SchoolSystem.ViewModels
 {
     public class StudentViewModel
     {
+        public string Id { get; set; }
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
         public string UserName { get; set; }

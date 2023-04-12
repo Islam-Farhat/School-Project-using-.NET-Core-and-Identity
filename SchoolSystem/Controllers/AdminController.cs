@@ -30,6 +30,7 @@ namespace SchoolSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> AddTeacher(TeacherViewModel teacherVM, IFormFile Photo)
         {
+            ViewBag.flag = false;
 
             if (ModelState.IsValid)
             {

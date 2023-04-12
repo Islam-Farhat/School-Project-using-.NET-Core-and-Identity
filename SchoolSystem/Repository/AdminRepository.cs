@@ -20,15 +20,16 @@ namespace SchoolSystem.Repository
        
     public async Task<bool> AddTeacher(TeacherViewModel teacherVM)
         {
-            ApplicationUser teacher = new ApplicationUser() {
-                Name=teacherVM.Name,
-                Email=teacherVM.Email,
-                UserName=teacherVM.UserName,
-                Address=teacherVM.Address,
-                PhoneNumber=teacherVM.Phone,
-                photoUrl=teacherVM.Photo.FileName,
-                BirthDate=teacherVM.BirthDate,
-                Gender=teacherVM.Gender};
+            ApplicationUser teacher = new ApplicationUser();
+            teacher.Name = teacherVM.Name;
+            teacher.Email = teacherVM.Email;
+            teacher.UserName = teacherVM.UserName;
+            teacher.Address = teacherVM.Address;
+            teacher.PhoneNumber = teacherVM.Phone;
+            teacher.photoUrl = teacherVM.Photo.FileName;
+            teacher.BirthDate = teacherVM.BirthDate;
+            teacher.Gender = teacherVM.Gender;
+            teacher.PasswordHash = teacherVM.Password;
 
 
             IdentityResult result = await userManager.CreateAsync(teacher, teacher.PasswordHash);

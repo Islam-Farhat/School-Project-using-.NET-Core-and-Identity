@@ -11,7 +11,8 @@ namespace SchoolSystem.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
+        
+           
         }
 
         /// <inheritdoc />

@@ -59,15 +59,22 @@ namespace SchoolSystem
             builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             builder.Services.AddScoped<IUserRepo, UserRepo>();
             builder.Services.AddScoped<ILevelService, LevelService>();
-
+            builder.Services.AddScoped<IClassService, ClassService>();
             builder.Services.AddScoped<IHolidayService, HolidayService>();
             builder.Services.AddScoped< IAttendanceService,AttendanceService>();
-
-            builder.Services.AddScoped<IClassService, ClassService>();
-
-            builder.Services.AddScoped<IAdminRepository, AdminRepository>();
-            builder.Services.AddScoped<ITeacherRepo, TeacherRepo>();
-
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
+>>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
+            builder.Services.AddScoped<IlevelRepository, levelRepository>();
+            builder.Services.AddScoped<IClassRepository, ClassRepository>();
+            
+            
+            
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
@@ -88,7 +95,7 @@ namespace SchoolSystem
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Admin}/{action=AddTeacher}/{id?}");
+                pattern: "{controller=Admin}/{action=AddClass}/{id?}");
 
             app.Run();
         }

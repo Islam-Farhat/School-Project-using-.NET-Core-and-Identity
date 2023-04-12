@@ -8,12 +8,16 @@ namespace SchoolSystem.Controllers
 {
     public class AdminController : Controller
     {
-        private readonly IAdminRepository adminRepository;
+        private readonly IAdminRepository iadminRepository;
+        private readonly IClassRepository iclassRepository;
+        private readonly IlevelRepository ilevelRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AdminController(IAdminRepository iadminRepository, IWebHostEnvironment webHostEnvironment)
+        public AdminController(IAdminRepository iadminRepository,IClassRepository iclassRepository,IlevelRepository ilevelRepository , IWebHostEnvironment webHostEnvironment)
         {
-            this.adminRepository = iadminRepository;
+            this.iadminRepository = iadminRepository;
+            this.iclassRepository = iclassRepository;
+            this.ilevelRepository = ilevelRepository;
             this._webHostEnvironment = webHostEnvironment;
         }
 
@@ -39,7 +43,7 @@ namespace SchoolSystem.Controllers
                     Photo.CopyTo(new FileStream(fullpath, FileMode.Create));
                 }
 
-                bool result = await adminRepository.AddTeacher(teacherVM);
+                bool result = await iadminRepository.AddTeacher(teacherVM);
                 if (result)
                 {
                     ViewBag.flag = true;
@@ -53,8 +57,8 @@ namespace SchoolSystem.Controllers
         public async Task<IActionResult> AddStudent()
         {
             StudentViewModel studentVM = new StudentViewModel();
-            studentVM.Classes = await adminRepository.GetClasses();
-            studentVM.Levels = await adminRepository.GetLevels();
+            studentVM.Classes = await iclassRepository.GetClasses();
+            studentVM.Levels = await ilevelRepository.GetLevels();
             ViewBag.flag = false;
             return View(studentVM);
         }
@@ -79,7 +83,7 @@ namespace SchoolSystem.Controllers
                     Photo.CopyTo(new FileStream(fullpath, FileMode.Create));
                 }
 
-                bool result = await adminRepository.AddStudent(studentVM);
+                bool result = await iadminRepository.AddStudent(studentVM);
                 if (result)
                 {
                     ViewBag.flag = true;
@@ -90,6 +94,8 @@ namespace SchoolSystem.Controllers
             return RedirectToAction("AddStudent");
         }
 
+
+        //Level Actions
         public IActionResult AddLevel()
         {
             ViewBag.flag = false;
@@ -97,13 +103,13 @@ namespace SchoolSystem.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> AddLevel(LevelViewModel level)
+        public async Task<IActionResult> AddLevel(LevelViewModel levelVM)
         {
             ModelState.Remove("Id");
             ViewBag.flag = false;
             if (ModelState.IsValid)
             {
-                bool result = await adminRepository.AddLevel(level);
+                bool result = await ilevelRepository.AddLevel(levelVM);
                 if (result == true)
                 {
                     ViewBag.flag = true;
@@ -115,13 +121,13 @@ namespace SchoolSystem.Controllers
 
         public async Task<IActionResult> GetAllLevels()
         {
-            var result = await adminRepository.GetLevels();
+            var result = await ilevelRepository.GetLevels();
             return Json(result);
         }
 
         public IActionResult GetLevelByID(int? id)
         {
-            var result = adminRepository.GetLevelByID(id);
+            var result = ilevelRepository.GetLevelByID(id);
             return Json(result);
         }
 
@@ -129,7 +135,7 @@ namespace SchoolSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = adminRepository.UpdateLevel(levelVM);
+                var result = ilevelRepository.UpdateLevel(levelVM);
                 if (result)
                     return Json("success");
                 else
@@ -141,13 +147,106 @@ namespace SchoolSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = adminRepository.DeleteLevel(id);
+                var result = ilevelRepository.DeleteLevel(id);
                 if (result)
                     return Json("success");
                 else
                     return Json("error");
             }
             return View();
+        }
+
+
+        //Class Actions
+        public async Task<IActionResult> AddClass()
+        {
+            ClassViewModel classVM = new ClassViewModel();
+            classVM.Levels = await ilevelRepository.GetLevels();
+            ViewBag.flag = false;
+            return View(classVM);
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddClass(ClassViewModel classVM)
+        {
+            ModelState.Remove("Id");
+            ModelState.Remove("Levels");
+            ViewBag.flag = false;
+            if (ModelState.IsValid)
+            {
+                bool result = await iclassRepository.AddClass(classVM);
+                if (result == true)
+                {
+                    ViewBag.flag = true;
+                    return RedirectToAction("AddClass");
+                }
+            }
+            return RedirectToAction("AddClass");
+        }
+        public async Task<IActionResult> GetAllClasses()
+        {
+            var result = await iclassRepository.GetClasses();
+            return Json(result);
+        }
+        public IActionResult GetClassByID(int? id)
+        {
+            var result = iclassRepository.GetClassByID(id);
+            return Json(result);
+        }
+        public IActionResult UpdateClass(ClassViewModel classVM)
+        {
+            ModelState.Remove("Levels");
+            if (ModelState.IsValid)
+            {
+                var result = iclassRepository.UpdateClass(classVM);
+                if (result)
+                    return Json("success");
+                else
+                    return Json("error");
+            }
+            return View(classVM);
+        }
+        public IActionResult DeleteClass(int? id)
+        {
+            ModelState.Remove("Levels");
+            if (ModelState.IsValid)
+            {
+                var result = iclassRepository.DeleteClass(id);
+                if (result)
+                    return Json("success");
+                else
+                    return Json("error");
+            }
+            return View();
+        }
+
+
+        //Feedback
+        public IActionResult Feedback()
+        {
+            return View(iadminRepository.GetFeedbacks());
+        }
+        public IActionResult Replay(int? id)
+        {
+            if(id==null) 
+            {
+                return View();
+            }
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Replay(FeedbackVM feedback)
+        {
+            ModelState.Remove("FeedbackText");
+            ModelState.Remove("StudentName");
+            if (ModelState.IsValid)
+            {
+                bool result = iadminRepository.AddFeedback(feedback);
+                if (result == true)
+                {
+                    return RedirectToAction("Feedback");
+                }
+            }
+            return View() ;
         }
     }
 }

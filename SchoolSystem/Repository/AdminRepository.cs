@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SchoolSystem.Models;
 using SchoolSystem.ViewModels;
 
@@ -66,14 +67,29 @@ namespace SchoolSystem.Repository
                 return false;
         }
 
-        public async Task<bool> AddLevel(LevelViewModel levelVM)
+        public List<FeedbackVM> GetFeedbacks()
+        {
+            var list= context.Feedbacks.Select(x => new {x.Id,x.FeedbackText,x.Response,StudentName=x.ApplicationUser.Name}).ToList();
+            var feedbacks=new List<FeedbackVM>();
+            foreach (var item in list)
+            {
+                FeedbackVM obj=new FeedbackVM ();
+                obj.Id = item.Id;
+                obj.FeedbackText = item.FeedbackText;
+                obj.Response = item.Response;
+                obj.StudentName=item.StudentName;
+
+                feedbacks.Add(obj);
+            }
+            return feedbacks;
+        }
+
+        public bool AddFeedback(FeedbackVM feedbackVM)
         {
             try
             {
-                Level level = new Level();
-                level.Name = levelVM.Name;
-
-                context.Levels.Add(level);
+                var feedback = context.Feedbacks.Where(x=>x.Id == feedbackVM.Id).FirstOrDefault();
+                feedback.Response = feedbackVM.Response;
                 context.SaveChanges();
                 return true;
             }
@@ -81,52 +97,7 @@ namespace SchoolSystem.Repository
             {
                 return false;
             }
-        }
 
-        public string GetLevelByID(int? id)
-        {
-            return context.Levels.Where(x => x.Id == id).Select(l=>l.Name).FirstOrDefault();
-        }
-
-        //I will replace them when we create level repo and class repo
-        public async Task<List<Classes>> GetClasses()
-        {
-            return context.Classes.ToList();
-        }
-        public async Task<List<Level>> GetLevels()
-        {
-            return context.Levels.ToList();
-        }
-
-        public bool UpdateLevel(LevelViewModel levelVM)
-        {
-            try
-            {
-                Level level = new Level();
-                level.Id= levelVM.Id;
-                level.Name= levelVM.Name;
-                context.Levels.Update(level);
-                context.SaveChanges();
-                return true;
-            }
-            catch 
-            {
-                return false;
-            }
-        }
-        public bool DeleteLevel(int? id)
-        {
-            try
-            {
-                Level level = context.Levels.Where(x=>x.Id==id).FirstOrDefault();
-                context.Levels.Remove(level);
-                context.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
         }
     }
 }

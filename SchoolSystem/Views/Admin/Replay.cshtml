@@ -1,0 +1,29 @@
+﻿@model FeedbackVM
+@{
+    ViewData["Title"] = "Replay";
+    Layout = null;
+}
+
+<h1>Replay</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Replay">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Response" class="control-label"></label>
+                <input asp-for="Response" class="form-control" />
+                <span asp-validation-for="Response" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Replay" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

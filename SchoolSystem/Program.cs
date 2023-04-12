@@ -62,14 +62,7 @@ namespace SchoolSystem
             builder.Services.AddScoped<IClassService, ClassService>();
             builder.Services.AddScoped<IHolidayService, HolidayService>();
             builder.Services.AddScoped< IAttendanceService,AttendanceService>();
->>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
->>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
->>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
->>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
->>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
->>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
->>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
->>>>>>> 6416648a7dac10bf1e5f110611f0610f1c0441d0
+
             builder.Services.AddScoped<IlevelRepository, levelRepository>();
             builder.Services.AddScoped<IClassRepository, ClassRepository>();
             

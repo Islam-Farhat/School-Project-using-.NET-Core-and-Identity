@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 using SchoolSystem.Models;
 using SchoolSystem.ViewModels;
 
@@ -10,13 +11,13 @@ namespace SchoolSystem.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
-
         public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
 
         }
+
 
         [HttpGet]
         public IActionResult Register()
@@ -26,6 +27,7 @@ namespace SchoolSystem.Controllers
             return View();
         }
 
+        //[ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
@@ -52,6 +54,36 @@ namespace SchoolSystem.Controllers
             return View(model);
         }
 
-       
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginVM loginVM)
+        {
+            if(ModelState.IsValid)
+            {
+              ApplicationUser user =await  _userManager.FindByNameAsync(loginVM.UserName);
+                if(user != null) { }
+                else
+                {
+                    ModelState.AddModelError("", "Username or Password Wrong");
+                    _signInManager.PasswordSignInAsync(user, loginVM
+                        .Password, loginVM.RememberMe, false);
+                    //if(user.)
+                    //return RedirectToAction("Index", "Student");
+                    //return RedirectToAction("Index", "Student");
+                    //return RedirectToAction("Index", "Student");
+                }
+            }
+
+            return View(loginVM);
+        }
+        public IActionResult Logout()
+        {
+            _signInManager.SignOutAsync();
+            return RedirectToAction("Login");
+        }
     }
 }

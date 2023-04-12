@@ -17,23 +17,24 @@ namespace SchoolSystem.Repository
             userManager = _userManager;
             signInManager = _signInManager;
         }
-        public async Task<bool> AddTeacher(TeacherViewModel teacherVM)
+       
+    public async Task<bool> AddTeacher(TeacherViewModel teacherVM)
         {
-            ApplicationUser teacher = new ApplicationUser();
-            teacher.Name = teacherVM.Name;
-            teacher.Email = teacherVM.Email;
-            teacher.UserName = teacherVM.UserName;
-            teacher.Address = teacherVM.Address;
-            teacher.PhoneNumber = teacherVM.Phone;
-            teacher.photoUrl = teacherVM.Photo.FileName;
-            teacher.BirthDate = teacherVM.BirthDate;
-            teacher.Gender = (Models.Gender)teacherVM.Gender;
-            teacher.PasswordHash = teacherVM.Password;
+            ApplicationUser teacher = new ApplicationUser() {
+                Name=teacherVM.Name,
+                Email=teacherVM.Email,
+                UserName=teacherVM.UserName,
+                Address=teacherVM.Address,
+                PhoneNumber=teacherVM.Phone,
+                photoUrl=teacherVM.Photo.FileName,
+                BirthDate=teacherVM.BirthDate,
+                Gender=teacherVM.Gender};
+
 
             IdentityResult result = await userManager.CreateAsync(teacher, teacher.PasswordHash);
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(teacher, "Admin");
+                await userManager.AddToRoleAsync(teacher, "Teacher");
                 await signInManager.SignInAsync(teacher, isPersistent: false);
                 return true;
             }
@@ -43,18 +44,19 @@ namespace SchoolSystem.Repository
 
         public async Task<bool> AddStudent(StudentViewModel studentVM)
         {
-            ApplicationUser student = new ApplicationUser();
-            student.Name = studentVM.Name;
-            student.Email = studentVM.Email;
-            student.UserName = studentVM.UserName;
-            student.Address = studentVM.Address;
-            student.PhoneNumber = studentVM.Phone;
-            student.photoUrl = studentVM.Photo.FileName;
-            student.BirthDate = studentVM.BirthDate;
-            student.Gender = (Models.Gender)studentVM.Gender;
-            student.PasswordHash = studentVM.Password;
-            student.levelID_fk = studentVM.levelID_fk;
-            student.classID_fk = studentVM.classID_fk;
+            ApplicationUser student = new ApplicationUser()
+            {
+                Name = studentVM.Name,
+                Email = studentVM.Email,
+                UserName = studentVM.UserName,
+                Address = studentVM.Address,
+                PhoneNumber = studentVM.Phone,
+                photoUrl = studentVM.Photo.FileName,
+                BirthDate = studentVM.BirthDate,
+                Gender = (Models.Gender)studentVM.Gender,
+                levelID_fk = studentVM.levelID_fk,
+                classID_fk = studentVM.classID_fk
+            };
 
             IdentityResult result = await userManager.CreateAsync(student, student.PasswordHash);
             if (result.Succeeded)

@@ -48,10 +48,6 @@ namespace SchoolSystem.Controllers
         }
 
 
-
-
-
-
         [HttpGet]
         public ActionResult StudentsReports ()
         {

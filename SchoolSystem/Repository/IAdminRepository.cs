@@ -7,6 +7,13 @@ namespace SchoolSystem.Repository
     {
         Task<bool> AddTeacher(TeacherViewModel teacher);
         Task<bool> AddStudent(StudentViewModel student);
+<<<<<<< HEAD
+  
+        List<FeedbackVM> GetFeedbacks();
+        bool AddFeedback(FeedbackVM feedback);
+        
+       
+=======
         bool UpdateStudent(StudentViewModel student);
         Task<StudentViewModel> GetStudentByID(StudentViewModel student);
         
@@ -24,5 +31,6 @@ namespace SchoolSystem.Repository
         // bool DeleteLevel(int? id);
         //bool UpdateLevel(LevelViewModel level);
         //string GetLevelByID(int? id);
+>>>>>>> d4587ef25cb673419e23722cb7c1a6dbbfe5ad5c
     }
 }

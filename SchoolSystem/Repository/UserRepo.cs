@@ -34,6 +34,7 @@ namespace SchoolSystem.Repository
             var teacher = users.Where(u => u.Id == id).FirstOrDefault();
             return teacher;
         }
+
         public async Task<ApplicationUser> GetStudentByIdAsync(string id)
         {
             var users = await _userManager.GetUsersInRoleAsync("Student");

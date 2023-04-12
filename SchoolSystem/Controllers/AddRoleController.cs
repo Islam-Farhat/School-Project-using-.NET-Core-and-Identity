@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SchoolSystem.ViewModels;
 
 namespace SchoolSystem.Controllers
 {
+    [Authorize(Roles ="Admin")]
     public class AddRoleController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

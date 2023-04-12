@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SchoolSystem.Models;
 using SchoolSystem.Repository;
 using SchoolSystem.Services;
+using System.Text.Json.Serialization;
 
 namespace SchoolSystem
 {
@@ -65,12 +66,11 @@ namespace SchoolSystem
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             builder.Services.AddScoped<IlevelRepository, levelRepository>();
             builder.Services.AddScoped<IClassRepository, ClassRepository>();
-            
-            
-            
-            // Add services to the container.
+            builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+          
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddControllers().AddJsonOptions(x =>
+              x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

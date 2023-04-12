@@ -5,6 +5,7 @@ using SchoolSystem.Models;
 using SchoolSystem.Repository;
 using SchoolSystem.Services;
 using SchoolSystem.ViewModels;
+using System.Security.Claims;
 
 namespace SchoolSystem.Controllers
 {
@@ -157,6 +158,7 @@ namespace SchoolSystem.Controllers
 
         public async Task<IActionResult> UpdateProfile()
         {
+           // string studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var student = await _userRepo.GetStudentByIdAsync(testUserId);
             StudentProfileViewModel studentProfileVM = new StudentProfileViewModel();
             studentProfileVM.Name = student.Name;

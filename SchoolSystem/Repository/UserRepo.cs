@@ -28,6 +28,12 @@ namespace SchoolSystem.Repository
             var users = await _userManager.GetUsersInRoleAsync(roleName);
             return users.ToList();
         }
+        public async Task<ApplicationUser> GetTeacherByIdAsync(string id)
+        {
+            var users = await _userManager.GetUsersInRoleAsync("Teacher");
+            var teacher = users.Where(u => u.Id == id).FirstOrDefault();
+            return teacher;
+        }
         public async Task<ApplicationUser> GetStudentByIdAsync(string id)
         {
             var users = await _userManager.GetUsersInRoleAsync("Student");

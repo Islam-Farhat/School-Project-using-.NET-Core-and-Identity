@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolSystem.Models;
 using SchoolSystem.Repository;
 using SchoolSystem.ViewModels;
+using System.Security.Claims;
 
 namespace SchoolSystem.Controllers
 {
@@ -10,34 +11,34 @@ namespace SchoolSystem.Controllers
     {
        
 
-        private readonly ITeacherRepo _teacherRepository;
+        private readonly IRepository<ApplicationUser> _teacherRepository;
+        private readonly IUserRepo _userRepo;
 
-        public TeacherController(ITeacherRepo iTeacherRepo )
+        public TeacherController(IRepository<ApplicationUser> teacherRepository, IUserRepo userRepo)
         {
-            _teacherRepository = iTeacherRepo;
+            _teacherRepository = teacherRepository;
+            _userRepo = userRepo;
         }
 
         //[HttpGet]
-        public IActionResult UpdateTeacher(int id)
+        public async Task<IActionResult> UpdateTeacher()
         {
-            if(id == 0)
-            { return BadRequest(); }
-            
-            var teacher = _teacherRepository.GetById(id);
+            string teacherId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            ApplicationUser teacher = await _userRepo.GetTeacherByIdAsync(teacherId);
+
             if(teacher == null) { return BadRequest(); }
 
-            TeacherViewModel teacherView = new TeacherViewModel();
-            teacherView.Name = teacher.Name;
-            teacherView.Address = teacher.Address;
-            teacherView.Phone = teacher.PhoneNumber;
-            teacherView.BirthDate = teacher.BirthDate;
-            teacherView.UserName = teacher.UserName;
-            teacherView.Email = teacher.Email;
-           // teacherView.Photo = teacher.photoUrl;
-            teacherView.BirthDate= teacher.BirthDate;
-            teacherView.Password = teacher.PasswordHash;
-            teacherView.ConfirmPassword = teacher.PasswordHash;
-
+            TeacherViewModel teacherView = new TeacherViewModel()
+            {   Name = teacher.Name,
+                Address = teacher.Address,
+                Phone = teacher.PhoneNumber,
+                BirthDate = teacher.BirthDate,
+                UserName = teacher.UserName,
+                Email = teacher.Email,
+                Password = teacher.PasswordHash,
+            };
+           
             return View("UpdateTeacher", teacherView);
         }
 
@@ -49,11 +50,8 @@ namespace SchoolSystem.Controllers
                 _teacherRepository.Update(teacher);
                 _teacherRepository.Save();
                 return RedirectToAction("Index");
-
-
             }
-            
-           
+
             return View(teacher);
         }
     }

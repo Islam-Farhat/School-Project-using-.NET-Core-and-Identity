@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SchoolSystem.Models;
 using SchoolSystem.ViewModels;
 
@@ -38,7 +39,7 @@ namespace SchoolSystem.Repository
         }
         public async Task<List<Level>> GetLevels()
         {
-            return context.Levels.ToList();
+            return context.Levels.Include(x=>x.Classes).ToList();
         }
 
         public bool UpdateLevel(LevelViewModel levelVM)

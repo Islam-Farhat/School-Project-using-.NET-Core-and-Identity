@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> _userManager
+@{
+    var applicationUser = await _userManager.GetUserAsync(User);
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     @*
@@ -169,14 +174,29 @@
                     <ul class="navbar-nav navbar-nav-right ml-lg-auto">
                         <li class="nav-item nav-profile dropdown border-0">
                             <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
-                                <img class="nav-profile-img mr-2" src="@User.Claims.FirstOrDefault(c=>c.Type=="photoUrl")" />
-                                <span class="profile-name text-white">@User.Identity.Name</span>
+                                @*<img class="nav-profile-img mr-2" src="/Images/@User.Claims.FirstOrDefault(c=>c.Type=="photoUrl")" />*@
+                                @if (User.Identity.IsAuthenticated == true && User.IsInRole("Admin"))
+                                {
+                                    <img class="nav-profile-img mr-2" src="/Images/@applicationUser.photoUrl" />
+                                    <span class="profile-name text-dark">@applicationUser.UserName</span>
+                                }
+                                else if (User.Identity.IsAuthenticated == true && User.IsInRole("Teacher"))
+                                {
+                                    <img class="nav-profile-img mr-2" src="/Images/@applicationUser.photoUrl" />
+                                    <span class="profile-name text-dark">@applicationUser.UserName</span>
+                                }
+                                else if (User.Identity.IsAuthenticated == true && User.IsInRole("Student"))
+                                {
+                                    <img class="nav-profile-img mr-2" src="/Images/@applicationUser.photoUrl" />
+                                    <span class="profile-name text-dark">@applicationUser.UserName</span>
+                                }
+
                             </a>
-                            <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+                           @* <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
                                 <a class="dropdown-item" href="#">
                                     <i class="mdi mdi-logout mr-2 text-primary"></i> Signout
                                 </a>
-                            </div>
+                            </div>*@
                         </li>
                     </ul>
                     

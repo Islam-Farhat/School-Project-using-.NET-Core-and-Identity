@@ -36,7 +36,7 @@ namespace SchoolSystem.Repository
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(teacher, "Teacher");
-                await signInManager.SignInAsync(teacher, isPersistent: false);
+               // await signInManager.SignInAsync(teacher, isPersistent: false);
                 return true;
             }
             else
@@ -54,7 +54,7 @@ namespace SchoolSystem.Repository
                 PhoneNumber = studentVM.Phone,
                 photoUrl = studentVM.Photo.FileName,
                 BirthDate = studentVM.BirthDate,
-                Gender = (Models.Gender)studentVM.Gender,
+                Gender = studentVM.Gender,
                 PasswordHash=studentVM.Password,
                 levelID_fk = studentVM.levelID_fk,
                 classID_fk = studentVM.classID_fk
@@ -64,7 +64,7 @@ namespace SchoolSystem.Repository
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(student, "Student");
-                await signInManager.SignInAsync(student, isPersistent: false);
+               // await signInManager.SignInAsync(student, isPersistent: false);
                 return true;
             }
             else

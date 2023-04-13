@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using SchoolSystem.Models;
 using SchoolSystem.ViewModels;
 
@@ -42,7 +43,7 @@ namespace SchoolSystem.Repository
         {
             //return context.Classes.Select(x => new { levelName = x.Level.Name, x.Name, x.Id, x.Seat, x.levelID_fk }).ToList();
 
-            return context.Classes.ToList();
+            return context.Classes.Include(x=>x.Level).ToList();
         }
 
         public bool UpdateClass(ClassViewModel classVM)

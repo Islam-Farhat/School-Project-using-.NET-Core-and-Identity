@@ -8,7 +8,7 @@ using SchoolSystem.ViewModels;
 namespace SchoolSystem.Controllers
 {
     
-   // [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IAdminRepository iadminRepository;
@@ -92,7 +92,7 @@ namespace SchoolSystem.Controllers
                 {
                     ViewBag.flag = true;
                 }
-                return RedirectToAction("AddStudent");
+                return RedirectToAction("AddStudent",studentVM);
             }
 
             return RedirectToAction("AddStudent");
@@ -263,7 +263,7 @@ namespace SchoolSystem.Controllers
         {
             return View(iadminRepository.GetFeedbacks());
         }
-        public IActionResult Replay(int? id)
+        public IActionResult Reply(int? id)
         {
             if (id == null)
             {
@@ -272,7 +272,7 @@ namespace SchoolSystem.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Replay(FeedbackVM feedback)
+        public IActionResult Reply(FeedbackVM feedback)
         {
             ModelState.Remove("FeedbackText");
             ModelState.Remove("StudentName");

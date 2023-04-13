@@ -26,6 +26,10 @@ namespace SchoolSystem
                         .AddEntityFrameworkStores<SchoolDB>()
                         .AddDefaultTokenProviders();
 
+            //Prevent infinite loop
+            builder.Services.AddControllers().AddJsonOptions(x =>
+               x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
             builder.Services.AddScoped<UserManager<ApplicationUser>>();
 
             builder.Services.Configure<IdentityOptions>(options =>
@@ -61,14 +65,14 @@ namespace SchoolSystem
             builder.Services.AddScoped<IUserRepo, UserRepo>();
             builder.Services.AddScoped<ILevelService, LevelService>();
             builder.Services.AddScoped<IHolidayService, HolidayService>();
-            builder.Services.AddScoped< IAttendanceService,AttendanceService>();
-            builder.Services.AddScoped<IClassService,ClassService>();
+            builder.Services.AddScoped<IAttendanceService, AttendanceService>();
+            builder.Services.AddScoped<IClassService, ClassService>();
 
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             builder.Services.AddScoped<IlevelRepository, levelRepository>();
             builder.Services.AddScoped<IClassRepository, ClassRepository>();
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
-          
+
             builder.Services.AddControllersWithViews();
             builder.Services.AddControllers().AddJsonOptions(x =>
               x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

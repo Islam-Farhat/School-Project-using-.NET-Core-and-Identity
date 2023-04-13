@@ -79,7 +79,7 @@
                         html += '<td>' + i++ + '</td>';
                         html += '<td>' + item.name + '</td>';
                         html += '<td>' + item.seat + '</td>';
-                        html += '<td>' + item.levelID_fk + '</td>';//level name
+                        html += '<td>' + item.level.name + '</td>';//level name
                         html += '<td><a href="javascript:void(0);" onclick=GetClassByID(' + item.id + '); return false;' + '<i class="fa fa-edit" style="font-size: x-large;color: #0066ff;"></i></a>&nbsp;&nbsp;&nbsp;' +
                             '<a href="javascript:void(0);" onclick=Delete(' + item.id + '); return false;>' + '<i class="fa fa-trash" style="font-size: x-large;color: #e62e00;"></i></a>&nbsp;' + '</td>'
                         html += '</tr>';

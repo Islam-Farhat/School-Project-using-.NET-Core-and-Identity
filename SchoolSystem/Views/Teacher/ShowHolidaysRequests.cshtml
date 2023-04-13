@@ -2,12 +2,13 @@
 
 @{
     ViewData["Title"] = "ShowHolidays";
+ 
 }
 
 <h1>ShowHolidays</h1>
 
 <table class="table">
-    <h2> Results: @Model.Count()</h2>
+    
     <thead>
         <tr>
 
@@ -34,8 +35,10 @@
                 <td>@holiday.DaysNum</td>
                 <td>@holiday.StartDate</td>
                 <td>@holiday.Status</td>
-                <td><a class="btn btn-outline-danger" asp-action="HolidayRequestResponse" asp-controller="Attendance" asp-route-id="@holiday.Id" asp-route-status="2" >Accept</a>
-                <a class="btn btn-outline-danger" asp-action="HolidayRequestResponse" asp-controller="Attendance" asp-route-id="@holiday.Id" asp-route-status="1" >Reject</a></td>
+                <td>
+                      <a onclick="Decrement()" class="btn btn-outline-danger" asp-action="HolidayRequestResponse" asp-controller="Attendance" asp-route-id="@holiday.Id" asp-route-status="2">Accept</a>
+                        <a onclick="Decrement()" class="btn btn-outline-danger" asp-action="HolidayRequestResponse" asp-controller="Attendance" asp-route-id="@holiday.Id" asp-route-status="1">Reject</a>
+                </td>
 
             </tr>
   }      }

@@ -9,6 +9,7 @@ namespace SchoolSystem.Repository
         Task<ApplicationUser> GetStudentByIdAsync(string id);
         Task<ApplicationUser> GetTeacherByIdAsync(string id);
 
+        Task UpdateUserAsync(ApplicationUser user);
 
 
     }

@@ -8,12 +8,12 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="UpdateTeacher">
+        <form asp-action="UpdateTeacher" enctype="multipart/form-data"  method="post">
             
-           @* <div class="form-group">
+            <div class="form-group">
                 <label for="exampleFormControlFile1">Photo</label>
                 <input asp-for="Photo" type="file" class="form-control-file" id="exampleFormControlFile1">
-            </div>*@
+            </div>
             <span asp-validation-for="Photo" class="text-danger"></span>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>

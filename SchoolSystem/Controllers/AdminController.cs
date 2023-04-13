@@ -115,6 +115,7 @@ namespace SchoolSystem.Controllers
             ModelState.Remove("ConfirmPassword");
             ModelState.Remove("Levels");
             ModelState.Remove("Classes");
+
             if (ModelState.IsValid)
             {
                 string filename = string.Empty;

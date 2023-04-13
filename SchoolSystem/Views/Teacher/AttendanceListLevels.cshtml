@@ -42,7 +42,7 @@
             var levelID = $("#LevelId").val();
             $("#ClassId").html("");
             $.ajax({
-                url: "/Attendance/GetClassessByLevelID",
+                url: "/Teacher/GetClassessByLevelID",
                 data: { "id": levelID },
                 success: function (result) {
                     $("#ClassId").append("<option value='0'>--Select Class--</option>");
@@ -59,7 +59,7 @@
             var classId = $("#ClassId").val();
             var levelId = $("#LevelId").val();
             var date = $("#Date").val();
-            var url = '/Attendance/AttendanceList?' + 'levelId=' + levelId + '&classId=' + classId + '&date=' + date;
+            var url = '/Teacher/AttendanceList?' + 'levelId=' + levelId + '&classId=' + classId + '&date=' + date;
 
             $("#partialViewContainer").load(url);
         }

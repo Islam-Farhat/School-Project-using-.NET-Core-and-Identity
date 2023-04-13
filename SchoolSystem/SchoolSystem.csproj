@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Attendance\" />
     <Folder Include="wwwroot\Images\" />
   </ItemGroup>
 

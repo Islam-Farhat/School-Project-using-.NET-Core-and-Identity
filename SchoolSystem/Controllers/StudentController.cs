@@ -1,6 +1,8 @@
 ﻿using App.Repos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.DependencyResolver;
 using SchoolSystem.Models;
 using SchoolSystem.Repository;
 using SchoolSystem.Services;
@@ -9,6 +11,7 @@ using System.Security.Claims;
 
 namespace SchoolSystem.Controllers
 {
+    [Authorize(Roles = "Student")]
     public class StudentController : Controller
     {
         private readonly IRepository<Holiday> _holidayRepository;
@@ -19,10 +22,15 @@ namespace SchoolSystem.Controllers
         private readonly IClassService _classService;
         private readonly IRepository<ApplicationUser> _applicationUserRepository;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly string testUserId = "8c05fd9d-cd61-4124-893a-c97657c8a17a";
-
-        public StudentController (SignInManager<ApplicationUser> signInManager,UserManager<ApplicationUser> userManager,IClassService classService, ILevelService levelService, IUserRepo userRepo, IAttendanceService attendanceService, IRepository<Holiday> holidayRepository, IRepository<Feedback> feedbackRepository, IRepository<ApplicationUser> applicationUserRepository)
+       
+        public StudentController (SignInManager<ApplicationUser> signInManager,
+            UserManager<ApplicationUser> userManager,IClassService classService,
+            ILevelService levelService, IUserRepo userRepo, IAttendanceService attendanceService, 
+            IRepository<Holiday> holidayRepository, IRepository<Feedback> feedbackRepository,
+            IRepository<ApplicationUser> applicationUserRepository,IWebHostEnvironment webHostEnvironment)
         {
             _holidayRepository = holidayRepository;
             _feedbackRepository = feedbackRepository;
@@ -33,6 +41,7 @@ namespace SchoolSystem.Controllers
             _applicationUserRepository = applicationUserRepository;
             _userManager = userManager;
             _signInManager = signInManager;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult AttendanceReportMonth()
@@ -156,29 +165,43 @@ namespace SchoolSystem.Controllers
             return View(holidayVM);
         }
 
+
         public async Task<IActionResult> UpdateProfile()
         {
-           // string studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var student = await _userRepo.GetStudentByIdAsync(testUserId);
+            string studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var student = await _userRepo.GetStudentByIdAsync(studentId);
             StudentProfileViewModel studentProfileVM = new StudentProfileViewModel();
             studentProfileVM.Name = student.Name;
             studentProfileVM.Address =student.Address;
             studentProfileVM.Phone = student.PhoneNumber;
             studentProfileVM.Email = student.Email;
-            //studentProfileVM.Photo = student.PhotoUrl;
+          
             return View(studentProfileVM);
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateProfile(StudentProfileViewModel studentProfileVM)
+        public async Task<IActionResult> UpdateProfile(StudentProfileViewModel studentProfileVM, IFormFile Photo)
+
         {
-            if(ModelState.IsValid)
+            string studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (ModelState.IsValid)
             {
-                ApplicationUser student = await _userRepo.GetStudentByIdAsync(testUserId);
+
+                string filename = string.Empty;
+                if (Photo != null)
+                {
+                    string uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
+                    filename = Photo.FileName;
+                    string fullpath = Path.Combine(uploads, filename);
+                    Photo.CopyTo(new FileStream(fullpath, FileMode.Create));
+                }
+
+                ApplicationUser student = await _userRepo.GetStudentByIdAsync(studentId);
+                student.Name = studentProfileVM.Name;
                 student.Address = studentProfileVM.Address;
                 student.PhoneNumber = studentProfileVM.Phone;
                 student.Email = studentProfileVM.Email;
-                //student.Photo = studentProfileVM.PhotoUrl;
-                _applicationUserRepository.Update(student);
+                student.photoUrl = studentProfileVM.Photo.FileName;
+                await _userRepo.UpdateUserAsync(student);
                 _applicationUserRepository.Save();
                 return RedirectToAction("AttendanceReportMonth");
             }

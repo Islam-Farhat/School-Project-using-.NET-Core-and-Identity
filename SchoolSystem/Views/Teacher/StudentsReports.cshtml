@@ -18,10 +18,13 @@
              </Select>
          </div>
     </div>
-   
-        <div id="partialViewContainer">
-
-        </div>
+    <div class="row  justify-content-center">
+        <div class="col-lg-10 mb-3">
+    <div id="partialViewContainer">
+    </div>
+    </div>
+    </div>
+       
   
 </div>
 
@@ -33,7 +36,7 @@
             var levelID = $("#LevelId").val();
             $("#ClassId").html("");
             $.ajax({
-                url: "/Attendance/GetClassessByLevelID",
+                url: "/Teacher/GetClassessByLevelID",
                 data: { "id": levelID },
                 success: function (result) {
                     $("#ClassId").append("<option value='0'>--Select Class--</option>");
@@ -49,7 +52,7 @@
         function GetStudents() {
             var classId = $("#ClassId").val();
             var levelId = $("#LevelId").val();
-            var url = '/Attendance/TakeAttendance?' + 'classId=' + classId + '&levelId=' + levelId;
+            var url = '/Teacher/ShowStudentReports?' + 'classId=' + classId + '&levelId=' + levelId;
 
             $("#partialViewContainer").load(url);
         }

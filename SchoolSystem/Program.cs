@@ -62,6 +62,7 @@ namespace SchoolSystem
             builder.Services.AddScoped<ILevelService, LevelService>();
             builder.Services.AddScoped<IHolidayService, HolidayService>();
             builder.Services.AddScoped< IAttendanceService,AttendanceService>();
+            builder.Services.AddScoped<IClassService,ClassService>();
 
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             builder.Services.AddScoped<IlevelRepository, levelRepository>();

@@ -31,11 +31,10 @@ namespace SchoolSystem.Controllers
             if(ModelState.IsValid)
             {
               ApplicationUser user =await  _userManager.FindByNameAsync(loginVM.UserName);
-                if(user != null) { }
-                else
-                {
-                    ModelState.AddModelError("", "Username or Password Wrong");
-                    _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, false);
+                if(user != null) {
+
+                  await _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, false);
+
                     if (User.IsInRole("Admin"))
                         return RedirectToAction("Index", "Admin");
                     else if (User.IsInRole("Student"))
@@ -48,15 +47,20 @@ namespace SchoolSystem.Controllers
                         //ModelState.AddModelError("", "");
                     }
                 }
+                else
+                {
+                    ModelState.AddModelError("", "Username or Password Wrong");
+                    
+                }
             }
 
             return View(loginVM);
         }
 
 
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            _signInManager.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Login");
         }
     }

@@ -55,6 +55,7 @@ namespace SchoolSystem.Repository
                 photoUrl = studentVM.Photo.FileName,
                 BirthDate = studentVM.BirthDate,
                 Gender = (Models.Gender)studentVM.Gender,
+                PasswordHash=studentVM.Password,
                 levelID_fk = studentVM.levelID_fk,
                 classID_fk = studentVM.classID_fk
             };

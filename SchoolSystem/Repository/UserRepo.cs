@@ -42,5 +42,11 @@ namespace SchoolSystem.Repository
             return student;
         }
 
+        public async Task UpdateUserAsync(ApplicationUser user)
+        {
+            await _userManager.UpdateAsync(user);
+
+        }
+
     }
 }

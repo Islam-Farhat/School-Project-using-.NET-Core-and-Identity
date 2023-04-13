@@ -28,37 +28,37 @@
                 @if (User.Identity.IsAuthenticated == true && User.IsInRole("Admin"))
                 {
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Index">
+                        <a class="nav-link" asp-controller="Admin" asp-action="AddTeacher">
                             <i class="mdi mdi-home menu-icon"></i>
-                            <span class="menu-title">Teachers</span>
+                            <span class="menu-title">Teacher</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Index">
+                        <a class="nav-link" asp-controller="Admin" asp-action="AddStudent">
                             <i class="mdi mdi-home menu-icon"></i>
-                            <span class="menu-title">Students</span>
+                            <span class="menu-title">Student</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Index">
+                        <a class="nav-link" asp-controller="Admin" asp-action="AddClass">
                             <i class="mdi mdi-home menu-icon"></i>
-                            <span class="menu-title">Classes</span>
+                            <span class="menu-title">Classe</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Index">
+                        <a class="nav-link" asp-controller="Admin" asp-action="AddLevel">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Levels</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Index">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Feedback">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Feedbacks</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Index">
+                            <a class="nav-link" asp-controller="Teacher" asp-action="ShowStudentReports">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Holidays</span>
                         </a>
@@ -149,7 +149,7 @@
                     </li>
                 }
 				<li class="mt-5 nav-item">
-					<a class=" nav-link" asp-controller="Student" asp-action="AttendanceReportMonth">
+                        <a class=" nav-link" asp-controller="Account" asp-action="Logout">
 						<i class="mdi mdi-logout menu-icon"></i>
                         <span class="menu-title">Sign Out</span>
 					</a>

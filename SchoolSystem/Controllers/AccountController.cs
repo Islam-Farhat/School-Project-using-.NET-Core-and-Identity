@@ -36,7 +36,7 @@ namespace SchoolSystem.Controllers
                   await _signInManager.PasswordSignInAsync(user, loginVM.Password, loginVM.RememberMe, false);
 
                     if (User.IsInRole("Admin"))
-                        return RedirectToAction("Index", "Admin");
+                        return RedirectToAction("AddTeacher", "Admin");
                     else if (User.IsInRole("Student"))
                         return RedirectToAction("Index", "Student");
                     else if (User.IsInRole("Teacher"))

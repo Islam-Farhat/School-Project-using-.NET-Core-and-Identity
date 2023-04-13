@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SchoolSystem.Models;
 using SchoolSystem.Repository;
@@ -6,6 +7,8 @@ using SchoolSystem.ViewModels;
 
 namespace SchoolSystem.Controllers
 {
+    
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IAdminRepository iadminRepository;

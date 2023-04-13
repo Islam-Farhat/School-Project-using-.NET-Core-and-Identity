@@ -1,7 +1,7 @@
 ﻿@model StudentViewModel
 @{
     ViewData["Title"] = "AddStudent";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    //Layout = "~/Views/Shared/_AdminLayout.cshtml";
     SelectList levels = new SelectList(Model.Levels, "Id", "Name");
     SelectList classes = new SelectList(Model.Classes, "Id", "Name");
 }

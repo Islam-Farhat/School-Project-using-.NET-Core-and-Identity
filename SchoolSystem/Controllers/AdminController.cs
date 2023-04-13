@@ -29,7 +29,6 @@ namespace SchoolSystem.Controllers
             ViewBag.flag = false;
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> AddTeacher(TeacherViewModel teacherVM, IFormFile Photo)
         {
@@ -57,7 +56,8 @@ namespace SchoolSystem.Controllers
 
             return View(teacherVM);
         }
-
+       
+        //Student actions
         public async Task<IActionResult> AddStudent()
         {
             StudentViewModel studentVM = new StudentViewModel();
@@ -66,8 +66,6 @@ namespace SchoolSystem.Controllers
             ViewBag.flag = false;
             return View(studentVM);
         }
-
-
         [HttpPost]
         public async Task<IActionResult> AddStudent(StudentViewModel studentVM, IFormFile Photo)
         {
@@ -99,8 +97,6 @@ namespace SchoolSystem.Controllers
 
             return RedirectToAction("AddStudent");
         }
-        
-        //test: 7dbbee52-2d44-4968-846e-74eef55c88fe
         public async Task<IActionResult> EditStudent(StudentViewModel studentVM)
         {
             var student = await iadminRepository.GetStudentByID(studentVM);
@@ -108,7 +104,6 @@ namespace SchoolSystem.Controllers
             student.Classes = await iclassRepository.GetClasses();
             return View(student);
         }
-
         [HttpPost]
         public IActionResult EditStudent(StudentViewModel studentVM, IFormFile Photo)
         {

@@ -8,7 +8,7 @@ using SchoolSystem.ViewModels;
 namespace SchoolSystem.Controllers
 {
     
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IAdminRepository iadminRepository;

@@ -48,7 +48,7 @@
                              id="navbarSupportedContent">
                             <ul class="navbar-nav align-items-center">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="#home" >Home</a>
+                                    <a class="nav-link"  asp-controller="Home" asp-action="Index">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#about">About</a>
@@ -66,13 +66,13 @@
                                 }else
 
                                 {
-                                    <li class="nav-item nav-profile dropdown border-0">
+                                    <li class="nav-item nav-profile dropdown border-0 ">
                                         <a class="nav-link dropdown-toggle" id="profileDropdown" data-toggle="dropdown" >
                                             @*<img class="nav-profile-img mr-2" src="/Images/@User.Claims.FirstOrDefault(c=>c.Type=="photoUrl")" />*@
                                                 <img class="nav-profile-img mr-2" src="/Images/@applicationUser.photoUrl" />
                                                 <span class="profile-name text-dark">@applicationUser.UserName</span>
                                         </a>
-                                        <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+                                        <div class="dropdown-menu bg-white navbar-dropdown w-100" aria-labelledby="profileDropdown">
 
                                             @if (User.Identity.IsAuthenticated == true && User.IsInRole("Student"))
                                             {
@@ -104,7 +104,7 @@
 
                                                 </a>
                                             }
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item" asp-controller="Account" asp-action="Logout">
                                                 <i class="mdi mdi-logout mr-2 text-warning"></i> Signout
                                             </a>
                                         </div>

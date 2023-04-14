@@ -140,7 +140,7 @@
                         </a>
                     </li>
                 }
-				<li class="mt-5 nav-item">
+				<li class="mt-2 nav-item">
                         <a class=" nav-link" asp-controller="Account" asp-action="Logout">
 						<i class="mdi mdi-logout menu-icon"></i>
                         <span class="menu-title">Sign Out</span>
@@ -195,6 +195,10 @@
                                     }
                                 else if (User.Identity.IsAuthenticated == true && User.IsInRole("Teacher"))
                                 {
+                                    <a class="dropdown-item" asp-controller="Teacher" asp-action="Index">
+                                        <i class="fa-solid fa-user mr-2 text-warning"></i>Profile
+
+                                    </a>
                                     <a class="dropdown-item" asp-controller="Teacher" asp-action="UpdateTeacher">
                                         <i class="fa-solid fa-user mr-2 text-warning"></i>Update
 
@@ -246,6 +250,7 @@
     <script src="/assets/js/dashboard.js"></script>
     <script src="https://kit.fontawesome.com/943ac315ae.js" crossorigin="anonymous"></script>
         @await RenderSectionAsync("Scripts", required: false)
+    @await  RenderSectionAsync("Styles",required: false)
     <!-- End custom js for this page -->
 </body>
 </html>

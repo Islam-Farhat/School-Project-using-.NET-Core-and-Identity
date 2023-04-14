@@ -33,13 +33,13 @@ namespace SchoolSystem.Models
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<SchoolSystem.ViewModels.FeedbackViewModel> FeedbackViewModel { get; set; } = default!;
+        //public DbSet<SchoolSystem.ViewModels.FeedbackViewModel> FeedbackViewModel { get; set; } = default!;
 
-        public DbSet<SchoolSystem.ViewModels.HolidayViewModel> HolidayViewModel { get; set; } = default!;
+       //public DbSet<SchoolSystem.ViewModels.HolidayViewModel> HolidayViewModel { get; set; } = default!;
 
-        public DbSet<SchoolSystem.ViewModels.StudentProfileViewModel> StudentProfileViewModel { get; set; } = default!;
+        //public DbSet<SchoolSystem.ViewModels.StudentProfileViewModel> StudentProfileViewModel { get; set; } = default!;
 
-        public DbSet<SchoolSystem.ViewModels.UpdatePasswordViewModel> UpdatePasswordViewModel { get; set; } = default!;
+       // public DbSet<SchoolSystem.ViewModels.UpdatePasswordViewModel> UpdatePasswordViewModel { get; set; } = default!;
 
 
 

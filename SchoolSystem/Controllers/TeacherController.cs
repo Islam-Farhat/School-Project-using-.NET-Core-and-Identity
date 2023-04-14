@@ -17,7 +17,6 @@ namespace SchoolSystem.Controllers
         private readonly IHolidayService _holidayService;
         private readonly ILevelService _levelService;
         private readonly IAttendanceService _attendanceService;
-
         public TeacherController(IRepository<ApplicationUser> teacherRepository, IUserRepo userRepo,IWebHostEnvironment webHostEnvironment, IAttendanceService attendanceService, ILevelService levelService, IHolidayService holidayService)
         {
             _teacherRepository = teacherRepository;
@@ -28,7 +27,14 @@ namespace SchoolSystem.Controllers
             _holidayService = holidayService;
 
         }
-        /// Take Attendnce
+        public async Task<IActionResult> Index()
+        {
+           TeacherProfileViewModel teacherProfileViewModel = new TeacherProfileViewModel();
+           teacherProfileViewModel.applicationUser = await _userRepo.GetTeacherByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
+           teacherProfileViewModel.numperOfPendingHolidays = _holidayService.GetPenddingHolidaysNumpers();
+           return View(teacherProfileViewModel);
+        }
+    
         [Authorize(Roles = "Teacher")]
         [HttpGet]
         public ActionResult AttendancePage()
@@ -132,8 +138,7 @@ namespace SchoolSystem.Controllers
         [Authorize(Roles = "Teacher,Admin")]
         public IActionResult ShowHolidaysRequests()
         {
-            List<Holiday> holidays = _holidayService.GetAllHolidays();
-
+            List<Holiday> holidays = _holidayService.GetAllPenddingHolidays();
             return View(holidays);
 
         }

@@ -5,10 +5,9 @@ namespace SchoolSystem.Services
     public interface IHolidayService
     {
         List<Holiday> GetAllHolidays();
-
-
-         Holiday GetHolidayById(int id);
-
+        List<Holiday> GetAllPenddingHolidays();
+        Holiday GetHolidayById(int id);
+        int GetPenddingHolidaysNumpers();
 
         void updateHoliday(Holiday holiday);
 

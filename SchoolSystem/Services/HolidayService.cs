@@ -16,6 +16,15 @@ namespace SchoolSystem.Services
         {
             return _holidayRepository.GetAll().Include(h=>h.ApplicationUser).ToList();
         }
+        public List<Holiday> GetAllPenddingHolidays()
+        {
+            return _holidayRepository.GetAll().Include(h => h.ApplicationUser).Where(h => h.Status == StatusType.Pending).ToList();
+        }
+        public int GetPenddingHolidaysNumpers()
+        {
+            return  _holidayRepository.GetAll().Include(h => h.ApplicationUser).Where(h=>h.Status == StatusType.Pending).ToList().Count();
+           
+        }
 
         public Holiday GetHolidayById(int id)
         {

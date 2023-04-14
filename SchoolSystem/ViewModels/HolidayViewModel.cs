@@ -3,9 +3,10 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 namespace SchoolSystem.ViewModels
 {
-    [Keyless]
+    
     public class HolidayViewModel
     {
+        public int id { get; set; }
         public string Reason { get; set; }
         [Range(1, 15)]
         [DisplayName("Number of Days")]

@@ -4,9 +4,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SchoolSystem.ViewModels
 {
-    [Keyless]
+    
     public class UpdatePasswordViewModel
     {
+        public int id { get; set; }
         [DataType(DataType.Password)]
         public string OldPassword { get; set; }
         [DataType(DataType.Password)]

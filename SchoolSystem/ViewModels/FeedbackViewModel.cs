@@ -4,9 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SchoolSystem.ViewModels
 {
-    [Keyless]
     public class FeedbackViewModel
     {
+        public  int id { get; set; }
+
         [DisplayName("FeedBack")]
         public string FeedbackTxt { get; set; }
     }

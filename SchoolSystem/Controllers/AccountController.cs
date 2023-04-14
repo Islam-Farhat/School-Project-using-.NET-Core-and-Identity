@@ -44,7 +44,7 @@ namespace SchoolSystem.Controllers
                     else
                     {
                      
-                        ModelState.AddModelError("", "Not Authenticate");
+                        ModelState.AddModelError("", "Not Authenticated");
                     }
                 }
                 else
@@ -57,11 +57,10 @@ namespace SchoolSystem.Controllers
             return View(loginVM);
         }
 
-
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login");
+            return RedirectToAction("Index","Home");
         }
     }
 }

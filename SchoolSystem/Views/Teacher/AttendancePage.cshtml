@@ -7,21 +7,26 @@
 
 <div class="container-fluid">
     <div class="row  justify-content-center">
-        <div class="col-lg-4 mb-3">  
+        <div class="col-lg-4 mb-3"> 
+         
                 <label asp-for="LevelId">Levels</label>
-                <select asp-for="LevelId" class="form-select" asp-items="levels" onchange="GetLevelClasses()">
+            <select asp-for="LevelId" class="form-select w-100 p-2 mb-4 border border-info rounded" asp-items="levels" onchange="GetLevelClasses()">
                     <option value="0">-- Select Level --</option>
-                </select>
-
-            <label asp-for="ClassId">Classes</label>
-            <Select class=" form-select" asp-for="ClassId" onchange="GetStudents()">
-             </Select>
+             </select>
+         
+                <label asp-for="ClassId">Classes</label>
+                <Select class="form-select w-100 p-2 mb-4 border border-info rounded" asp-for="ClassId" onchange="GetStudents()">
+                </Select>
+       
          </div>
     </div>
-   
-        <div id="partialViewContainer">
-
+  
+    <div class="row  justify-content-center">
+        <div class="col-lg-10 mb-3">
+            <div id="partialViewContainer">
+            </div>
         </div>
+    </div>
   
 </div>
 

@@ -73,7 +73,7 @@ namespace SchoolSystem.Controllers
                 }
                 _attendanceService.Save();
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("AttendanceListLevels");
             }
 
             return PartialView("TakeAttendance", students);
@@ -187,8 +187,9 @@ namespace SchoolSystem.Controllers
                 UserName = teacher.UserName,
                 Email = teacher.Email,
                 Password = teacher.PasswordHash,
-                
-            };
+                Filename = teacher.photoUrl
+
+        };
            
             return View( teacherView);
         }
@@ -207,7 +208,7 @@ namespace SchoolSystem.Controllers
             teacher.BirthDate = teacherVM.BirthDate;
             teacher.Gender = teacherVM.Gender;
             teacher.PasswordHash = teacherVM.Password;
-            teacher.photoUrl = teacherVM.Filename;
+            teacher.photoUrl = teacherVM.Photo.FileName;
 
             if (ModelState.IsValid)
             {

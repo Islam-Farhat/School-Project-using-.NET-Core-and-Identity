@@ -80,28 +80,23 @@
                     </li>
                     <li class="nav-item">
                             <a class="nav-link" asp-controller="Teacher" asp-action="AttendanceListLevels">
-                            <i class="mdi mdi-home menu-icon"></i>
+                                <i class="fa-solid fa-clipboard-user menu-icon"></i>
                             <span class="menu-title">View Attendance</span>
                         </a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link" asp-controller="Teacher" asp-action="StudentsReports">
-                            <i class="mdi mdi-home menu-icon"></i>
-                            <span class="menu-title">View Report</span>
+                                <i class="fa-solid fa-comments menu-icon"></i>
+                            <span class="menu-title">Students Report</span>
                         </a>
                     </li>
                     <li class="nav-item">
                             <a class="nav-link" asp-controller="Teacher" asp-action="ShowHolidaysRequests">
-                            <i class="mdi mdi-home menu-icon"></i>
+                           <i class="fa-solid fa-wand-sparkles menu-icon"></i>
                             <span class="menu-title">Holidays</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-controller="Teacher" asp-action="Index">
-                            <i class="mdi mdi-home menu-icon"></i>
-                            <span class="menu-title">Update Profile</span>
-                        </a>
-                    </li>
+                    
                 }
                 @if (User.Identity.IsAuthenticated == true && User.IsInRole("Student"))
                 {
@@ -188,7 +183,7 @@
                                     </a>
 
                                 }
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Logout">
                                         <i class="mdi mdi-logout mr-2 text-warning"></i> Signout
                                     </a>
                                 </div>

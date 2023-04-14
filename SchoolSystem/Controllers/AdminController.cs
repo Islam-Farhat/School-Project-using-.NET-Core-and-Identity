@@ -100,7 +100,12 @@ namespace SchoolSystem.Controllers
                 {
                     ViewBag.flag = true;
                 }
+                
                 return RedirectToAction("AddStudent",studentVM);
+            }
+            else
+            {
+                ModelState.AddModelError("", "UserName or Email Not Valid");
             }
 
             return RedirectToAction("AddStudent");

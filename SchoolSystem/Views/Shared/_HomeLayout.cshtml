@@ -99,7 +99,7 @@
                                             }
                                             else if (User.Identity.IsAuthenticated == true && User.IsInRole("Admin"))
                                             {
-                                                <a class="dropdown-item" asp-controller="Admin" asp-action="Index">
+                                                <a class="dropdown-item" asp-controller="Teacher" asp-action="StudentsReports">
                                                     <i class="fa-solid fa-user mr-2 text-warning"></i>Profile
 
                                                 </a>

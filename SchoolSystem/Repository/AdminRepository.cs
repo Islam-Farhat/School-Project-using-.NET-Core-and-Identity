@@ -10,12 +10,14 @@ namespace SchoolSystem.Repository
         SchoolDB context;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IUserRepo _userRepo;
 
-        public AdminRepository(SchoolDB _context, UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager)//inject context from Program.cs
+        public AdminRepository(IUserRepo userRepo,SchoolDB _context, UserManager<ApplicationUser> _userManager, SignInManager<ApplicationUser> _signInManager)//inject context from Program.cs
         {
             context = _context;
             userManager = _userManager;
             signInManager = _signInManager;
+            _userRepo=userRepo;
         }
        
     public async Task<bool> AddTeacher(TeacherViewModel teacherVM)
@@ -74,7 +76,7 @@ namespace SchoolSystem.Repository
         {
             try
             {
-                ApplicationUser student = new ApplicationUser();
+                ApplicationUser student = await _userRepo.GetStudentByIdAsync(studentVM.Id);
                 //student.Id = studentVM.Id;
                 student.Name = studentVM.Name;
                 student.Email = studentVM.Email;

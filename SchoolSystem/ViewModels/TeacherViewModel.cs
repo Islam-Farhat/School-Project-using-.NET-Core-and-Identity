@@ -10,6 +10,8 @@ namespace SchoolSystem.ViewModels
         [EmailAddress]
         public string Email { get; set; }
         public string Address { get; set; }
+
+        public string? Filename { get; set; }
         public IFormFile Photo { get; set; }
 
         [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no.")]

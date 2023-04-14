@@ -5,15 +5,13 @@
 }
 
 <h1>Apply for Holiday</h1>
-<div>
-    <a asp-action="ViewHolidays">Back to List</a>
-</div>
+
 <hr />
 <div class="row justify-content-center">
 
-    <div class="col-md-4 p-5 bg-white mt-5 shadow-lg">
+    <div class="col-md-6 p-5 bg-white mt-5 ">
         <form asp-action="ApplyHoliday">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
             <div class="form-group">
                 <label asp-for="Reason" class="control-label"></label>
                 <input asp-for="Reason" class="form-control" />
@@ -29,13 +27,17 @@
                 <input asp-for="StartDate" class="form-control" />
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
+
             <div class="form-group">
-                <input type="submit" value="Apply" class="btn btn-primary" />
-            </div>
+                <input type="submit" value="Apply" class="btn btn-warning rounded" />
+            </div
+            
+<div>
+    <a asp-action="ViewHolidays" class ="text-warning text-decoration-none"><i class="fa-solid fa-arrow-left-long ms-1"></i> Back </a>
+</div>
         </form>
     </div>
 
 </div>
-
 
 

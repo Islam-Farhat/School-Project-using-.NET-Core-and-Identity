@@ -43,8 +43,8 @@ namespace SchoolSystem.Controllers
                         return RedirectToAction("Index", "Teacher");
                     else
                     {
-                        //UnAuthorizedPage
-                        //ModelState.AddModelError("", "");
+                     
+                        ModelState.AddModelError("", "Not Authenticate");
                     }
                 }
                 else

@@ -59,6 +59,18 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="blog.html">Blog</a>
                                 </li>
+                                @if(User.Identity.IsAuthenticated==false){
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                                    </li>
+                                }else
+
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                                    </li>
+                                }
+
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Pages

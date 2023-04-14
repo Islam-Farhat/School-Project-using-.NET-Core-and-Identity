@@ -80,7 +80,7 @@ namespace SchoolSystem.Controllers
 
         }
 
-        /// Holidays List Of Attendance
+        ///  List Of Attendance
         [Authorize(Roles = "Teacher")]
         public ActionResult AttendanceListLevels()
         {
@@ -207,6 +207,7 @@ namespace SchoolSystem.Controllers
             teacher.BirthDate = teacherVM.BirthDate;
             teacher.Gender = teacherVM.Gender;
             teacher.PasswordHash = teacherVM.Password;
+            teacher.photoUrl = teacherVM.Filename;
 
             if (ModelState.IsValid)
             {

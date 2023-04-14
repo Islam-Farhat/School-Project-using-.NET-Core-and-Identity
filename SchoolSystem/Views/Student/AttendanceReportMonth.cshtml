@@ -7,11 +7,11 @@
 <hr />
 <div class="container ">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-6">
             <form >
-                <div class="form-group">
-                    <h4>Select Month to See Your Attendance</h4>
-                    <select class="form-control" id="month" name="month">
+                <div class="form-group justify-content-center">
+                    <h4 class="text-center text-uppercase">Select Month </h4>
+                    <select class="form-select w-100 p-2  border border-info rounded" onchange="GetData()" id="month" name="month">
                         <option value="1">Jan</option>
                         <option value="2">Feb</option>
                         <option value="3">March</option>
@@ -26,13 +26,15 @@
                         <option value="12">Dec</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="View" onclick="GetData()" class="btn btn-primary" />
-                </div>
             </form>
         </div>
     </div>
-    <div id="partial"></div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 " id="partial">
+   
+        </div>
+    </div>
+
 </div>
 <script>
     function GetData() {

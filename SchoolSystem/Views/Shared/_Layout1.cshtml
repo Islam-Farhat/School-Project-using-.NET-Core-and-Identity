@@ -26,7 +26,7 @@
     <div class="container-scroller">
         <nav class="sidebar " id="sidebar">
             <div style="background-color:#fff; height:100%">
-            <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
+            <div class="text-center sidebar-brand-wrapper d-flex align-items-center mb-5">
                     <a class="sidebar-brand brand-logo"><img src="/assets/home/img/logo.png" alt="logo" /></a>
             </div>
             <ul class="nav">
@@ -63,7 +63,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link" asp-controller="Teacher" asp-action="ShowStudentReports">
+                            <a class="nav-link" asp-controller="Teacher" asp-action="ShowHolidaysRequests">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Holidays</span>
                         </a>
@@ -71,38 +71,27 @@
                 }
                 @if (User.Identity.IsAuthenticated == true && User.IsInRole("Teacher"))
                 {
-                    <li class="nav-item nav-profile">
-                        <a href="#" class="nav-link">
-                            <div class="nav-profile-image">
-                                <img src="/Images/@applicationUser.photoUrl" alt="profile" />
-                                <span class="login-status online"></span>
-                                <!--change to offline or busy as needed-->
-                            </div>
-                            <div class="nav-profile-text d-flex flex-column pr-3">
-                                <span class="font-weight-medium mb-2">@User.Identity.Name</span>
-                            </div>
-                        </a>
-                    </li>
+                   
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Teacher" asp-action="Index">
+                            <a class="nav-link" asp-controller="Teacher" asp-action="AttendancePage">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Take Attendance</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Teacher" asp-action="Index">
+                            <a class="nav-link" asp-controller="Teacher" asp-action="AttendanceListLevels">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">View Attendance</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Teacher" asp-action="Index">
+                            <a class="nav-link" asp-controller="Teacher" asp-action="StudentsReports">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">View Report</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Teacher" asp-action="Index">
+                            <a class="nav-link" asp-controller="Teacher" asp-action="ShowHolidaysRequests">
                             <i class="mdi mdi-home menu-icon"></i>
                             <span class="menu-title">Holidays</span>
                         </a>
@@ -116,18 +105,7 @@
                 }
                 @if (User.Identity.IsAuthenticated == true && User.IsInRole("Student"))
                 {
-                    <li class="nav-item nav-profile">
-                        <a href="#" class="nav-link">
-                            <div class="nav-profile-image">
-                                    <img src="/Images/@applicationUser.photoUrl" alt="profile" />
-                                <span class="login-status online"></span>
-                                <!--change to offline or busy as needed-->
-                            </div>
-                            <div class="nav-profile-text d-flex flex-column pr-3">
-                                <span class="font-weight-medium mb-2">@User.Identity.Name</span>
-                            </div>
-                        </a>
-                    </li>
+                   
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Student" asp-action="AttendanceReportMonth">
                                 <i class="fa-solid fa-clipboard-user menu-icon"></i>
@@ -167,7 +145,7 @@
         <div class="container-fluid page-body-wrapper">
           
             <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row" >
-                <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-around" style="background-color: #fff9f8;;">
+                <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-around" style="background-color: #fefae0;">
                     <button class="navbar-toggler navbar-toggler  align-self-center mr-2" type="button"  data-toggle="minimize">
                         <i class="mdi mdi-menu"></i>
                     </button>
@@ -192,18 +170,36 @@
                                 }
 
                             </a>
-                           @* <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+                    
+                          
+                                <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+                                     @if (User.Identity.IsAuthenticated == true && User.IsInRole("Student"))
+                                         {
+                                    <a class="dropdown-item" asp-controller="Student" asp-action="UpdateProfile">
+                                        <i class="fa-solid fa-user mr-2 text-warning"></i>Update
+
+                                    </a>
+                                }
+                                else if (User.Identity.IsAuthenticated == true && User.IsInRole("Teacher"))
+                                {
+                                    <a class="dropdown-item" asp-controller="Teacher" asp-action="UpdateTeacher">
+                                        <i class="fa-solid fa-user mr-2 text-warning"></i>Update
+
+                                    </a>
+
+                                }
                                 <a class="dropdown-item" href="#">
-                                    <i class="mdi mdi-logout mr-2 text-primary"></i> Signout
-                                </a>
-                            </div>*@
+                                        <i class="mdi mdi-logout mr-2 text-warning"></i> Signout
+                                    </a>
+                                </div>
+                            
                         </li>
                     </ul>
                     
                 </div>
             </nav>
             <div class="main-panel">
-                <div class="content-wrapper pb-0 " style="background-color:#fff9f8;">
+                <div class="content-wrapper pb-5 " style="background-color:#fefae0;">
                     @RenderBody()
                     
                 </div>

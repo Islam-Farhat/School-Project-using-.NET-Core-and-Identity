@@ -14615,12 +14615,13 @@ dl {
       .navbar .navbar-menu-wrapper .navbar-toggler i {
         font-size: 1rem; }
         .navbar .navbar-menu-wrapper .navbar-toggler i:before {
-          width: 34px;
-          height: 34px;
-          border-radius: 50px;
-          background: #ff3ca6;
-          text-align: center;
-          line-height: 2.2; }
+            width: 34px;
+            height: 34px;
+            border-radius: 50px;
+            background: #FF9203;
+            text-align: center;
+            line-height: 2.2;
+        }
     .navbar .navbar-menu-wrapper .navbar-text {
       font-size: 0.875rem; }
     .navbar .navbar-menu-wrapper .navbar-nav {

@@ -3,17 +3,14 @@
 @{
     ViewData["Title"] = "AttendanceReport";
 }
-<div class="container shadow-sm p-5 bg-white">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
 
-            <table class="table">
-                <thead>
+            <table class="table bg-white table-hover text-center">
+                <thead style="background : #003049 " class="text-white">
                     <tr>
-                        <th>
+                        <th scope="col" >
                             @Html.DisplayNameFor(model => model.AttendanceStatus)
                         </th>
-                        <th>
+            <th scope="col">
                             @Html.DisplayNameFor(model => model.Date)
                         </th>
                     </tr>
@@ -35,7 +32,7 @@
 
         </div>
     </div>
-</div>
+
 
 
 

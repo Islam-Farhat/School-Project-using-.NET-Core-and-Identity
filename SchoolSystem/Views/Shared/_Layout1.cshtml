@@ -27,7 +27,10 @@
         <nav class="sidebar " id="sidebar">
             <div style="background-color:#fff; height:100%">
             <div class="text-center sidebar-brand-wrapper d-flex align-items-center mb-5">
-                    <a class="sidebar-brand brand-logo"><img src="/assets/home/img/logo.png" alt="logo" /></a>
+                    <a class="sidebar-brand brand-logo" asp-action="Index" asp-controller="Home"><img src="/assets/home/img/logo.png" alt="logo" /></a>
+
+                    <a class="sidebar-brand brand-logo-mini pl-4 pt-3" asp-action="Index" asp-controller="Home"><img src="/assets/home/img/favicon.png" alt="logo" /></a>
+
             </div>
             <ul class="nav">
                 @if (User.Identity.IsAuthenticated == true && User.IsInRole("Admin"))

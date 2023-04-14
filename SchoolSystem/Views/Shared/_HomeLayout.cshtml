@@ -1,7 +1,7 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> _userManager
 @{
+    var applicationUser = await _userManager.GetUserAsync(User);
 }
 <!doctype html>
 <html lang="en">
@@ -48,16 +48,16 @@
                              id="navbarSupportedContent">
                             <ul class="navbar-nav align-items-center">
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="index.html">Home</a>
+                                    <a class="nav-link" href="#home" >Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="about.html">About</a>
+                                    <a class="nav-link" href="#about">About</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="cource.html">Courses</a>
+                                    <a class="nav-link" href="#courses">Courses</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="blog.html">Blog</a>
+                                    <a class="nav-link" href="#blog">Blog</a>
                                 </li>
                                 @if(User.Identity.IsAuthenticated==false){
                                     <li class="nav-item">
@@ -66,26 +66,51 @@
                                 }else
 
                                 {
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                                    <li class="nav-item nav-profile dropdown border-0">
+                                        <a class="nav-link dropdown-toggle" id="profileDropdown" data-toggle="dropdown" >
+                                            @*<img class="nav-profile-img mr-2" src="/Images/@User.Claims.FirstOrDefault(c=>c.Type=="photoUrl")" />*@
+                                                <img class="nav-profile-img mr-2" src="/Images/@applicationUser.photoUrl" />
+                                                <span class="profile-name text-dark">@applicationUser.UserName</span>
+                                        </a>
+                                        <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+
+                                            @if (User.Identity.IsAuthenticated == true && User.IsInRole("Student"))
+                                            {
+                                                <a class="dropdown-item" asp-controller="Student" asp-action="Index">
+                                                    <i class="fa-solid fa-user mr-2 text-warning"></i>Profile
+
+                                                </a>
+                                                <a class="dropdown-item" asp-controller="Student" asp-action="UpdateProfile">
+                                                    <i class="fa-solid fa-user mr-2 text-warning"></i>Update
+
+                                                </a>
+                                            }
+                                            else if (User.Identity.IsAuthenticated == true && User.IsInRole("Teacher"))
+                                            {
+                                                <a class="dropdown-item" asp-controller="Teacher" asp-action="Index">
+                                                    <i class="fa-solid fa-user mr-2 text-warning"></i>Profile
+
+                                                </a>
+                                                <a class="dropdown-item" asp-controller="Teacher" asp-action="UpdateTeacher">
+                                                    <i class="fa-solid fa-user mr-2 text-warning"></i>Update
+
+                                                </a>
+
+                                            }
+                                            else if (User.Identity.IsAuthenticated == true && User.IsInRole("Admin"))
+                                            {
+                                                <a class="dropdown-item" asp-controller="Admin" asp-action="Index">
+                                                    <i class="fa-solid fa-user mr-2 text-warning"></i>Profile
+
+                                                </a>
+                                            }
+                                            <a class="dropdown-item" href="#">
+                                                <i class="mdi mdi-logout mr-2 text-warning"></i> Signout
+                                            </a>
+                                        </div>
+
                                     </li>
                                 }
-
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="blog.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Pages
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="single-blog.html">Single blog</a>
-                                        <a class="dropdown-item" href="elements.html">Elements</a>
-                                    </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact</a>
-                                </li>
-                                <li class="d-none d-lg-block">
-                                    <a class="btn_1" href="#">Get a Quote</a>
-                                </li>
                             </ul>
                         </div>
                     </nav>

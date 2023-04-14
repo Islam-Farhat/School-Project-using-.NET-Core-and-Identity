@@ -11,6 +11,11 @@
   background-image: -webkit-linear-gradient(0deg, #ee390f 0%, #f9b700 100%);
   background-image: -ms-linear-gradient(0deg, #ee390f 0%, #f9b700 100%);
 }
+.nav-profile-img {
+    height: 34px;
+    width: 34px;
+    border-radius: 50%;
+}
 
 /**************** extend css start ****************/
 /**************** common css start ****************/

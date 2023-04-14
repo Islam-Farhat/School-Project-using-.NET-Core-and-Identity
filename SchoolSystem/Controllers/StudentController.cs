@@ -42,7 +42,26 @@ namespace SchoolSystem.Controllers
             _signInManager = signInManager;
             _webHostEnvironment = webHostEnvironment;
         }
-
+        public async Task<IActionResult> Index()
+        {
+            string studentId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var student =await _userRepo.GetStudentByIdAsync(studentId);
+            StudentIndexViewModel studentIndexVM=new StudentIndexViewModel();
+            studentIndexVM.Name = student.Name;
+            studentIndexVM.Address= student.Address;
+            studentIndexVM.Phone = student.PhoneNumber;
+            studentIndexVM.Photo = student.photoUrl;
+            studentIndexVM.Email = student.Email;
+            studentIndexVM.Birthday = student.BirthDate.Date;
+            if (student.levelID_fk!=null)
+                 studentIndexVM.LevelName = _levelService.GetLevelName((int)student.levelID_fk);
+            if (student.classID_fk != null)
+                studentIndexVM.ClassName=_classService.GetClassName((int)student.classID_fk);
+            studentIndexVM.Attendances= _attendanceService.GetAttendacesByStdId(User.FindFirstValue(ClaimTypes.NameIdentifier), DateTime.Now.Month);
+            studentIndexVM.Holidays = _holidayRepository.GetAll().Where(h => h.userID_fk == User.FindFirstValue(ClaimTypes.NameIdentifier)).ToList();
+            studentIndexVM.Feedbacks= _feedbackRepository.GetAll().Where(f => f.userID_fk == User.FindFirstValue(ClaimTypes.NameIdentifier)).ToList();
+            return View(studentIndexVM);
+        }
         public IActionResult AttendanceReportMonth()
         { 
             return View();

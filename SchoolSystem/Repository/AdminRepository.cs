@@ -70,24 +70,22 @@ namespace SchoolSystem.Repository
             else
                 return false;
         }
-        public bool UpdateStudent(StudentViewModel studentVM)
+        public async Task<bool> UpdateStudent(StudentViewModel studentVM)
         {
             try
             {
                 ApplicationUser student = new ApplicationUser();
+                //student.Id = studentVM.Id;
                 student.Name = studentVM.Name;
                 student.Email = studentVM.Email;
                 student.UserName = studentVM.UserName;
                 student.Address = studentVM.Address;
                 student.PhoneNumber = studentVM.Phone;
-               // student.photoUrl = studentVM.Photo.FileName;
                 student.BirthDate = studentVM.BirthDate;
-                student.Gender = studentVM.Gender;
-                student.PasswordHash = studentVM.Password;
                 student.levelID_fk = studentVM.levelID_fk;
                 student.classID_fk = studentVM.classID_fk;
 
-                userManager.UpdateAsync(student);
+                await userManager.UpdateAsync(student);
                 context.SaveChanges();
                 return true;
             }

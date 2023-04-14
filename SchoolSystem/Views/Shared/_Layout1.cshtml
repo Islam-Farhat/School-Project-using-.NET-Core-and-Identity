@@ -100,7 +100,12 @@
                 }
                 @if (User.Identity.IsAuthenticated == true && User.IsInRole("Student"))
                 {
-                   
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Student" asp-action="Index">
+                                <i class="fa-solid fa-user menu-icon"></i>
+                                <span class="menu-title">Profile</span>
+                            </a>
+                        </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Student" asp-action="AttendanceReportMonth">
                                 <i class="fa-solid fa-clipboard-user menu-icon"></i>
@@ -121,7 +126,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Student" asp-action="UpdateProfile">
-                                <i class="fa-solid fa-user menu-icon"></i>
+                                <i class="fa-solid fa-pen-to-square menu-icon"></i>
                             <span class="menu-title">Update Profile</span>
                         </a>
                     </li>
@@ -169,12 +174,16 @@
                           
                                 <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
                                      @if (User.Identity.IsAuthenticated == true && User.IsInRole("Student"))
-                                         {
-                                    <a class="dropdown-item" asp-controller="Student" asp-action="UpdateProfile">
-                                        <i class="fa-solid fa-user mr-2 text-warning"></i>Update
+                                     {
+                                        <a class="dropdown-item" asp-controller="Student" asp-action="Index">
+                                            <i class="fa-solid fa-user mr-2 text-warning"></i>Profile
 
-                                    </a>
-                                }
+                                        </a>
+                                        <a class="dropdown-item" asp-controller="Student" asp-action="UpdateProfile">
+                                        <i class="fa-solid fa-pen-to-square mr-2 text-warning"></i>Update
+
+                                        </a>
+                                    }
                                 else if (User.Identity.IsAuthenticated == true && User.IsInRole("Teacher"))
                                 {
                                     <a class="dropdown-item" asp-controller="Teacher" asp-action="UpdateTeacher">

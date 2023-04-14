@@ -152,5 +152,27 @@ namespace SchoolSystem.Repository
 
             return studentVM;
         }
+
+        public async Task<bool> DeleteStudent(string id)
+        {
+            try
+            {
+                var user = await userManager.FindByIdAsync(id);
+                if (user == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var result = await userManager.DeleteAsync(user);
+                    return true;
+                }
+            }
+            catch 
+            {
+
+                return false;
+            }
+        }
     }
 }

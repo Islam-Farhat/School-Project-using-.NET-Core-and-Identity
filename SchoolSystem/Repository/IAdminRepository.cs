@@ -11,6 +11,7 @@ namespace SchoolSystem.Repository
         bool AddFeedback(FeedbackVM feedback);
 
         bool UpdateStudent(StudentViewModel student);
+        Task<bool> DeleteStudent(string id);
         Task<StudentViewModel> GetStudentByID(StudentViewModel student);
         
 

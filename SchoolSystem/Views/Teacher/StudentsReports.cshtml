@@ -11,7 +11,7 @@
             <label asp-for="LevelId">Levels</label>
             <select asp-for="LevelId" class="form-select w-100 p-2 mb-4 border border-info rounded" asp-items="levels" onchange="GetLevelClasses()">
                     <option value="0">-- Select Level --</option>
-                </select>
+            </select>
 
             <label asp-for="ClassId">Classes</label>
             <Select class="form-select w-100 p-2 mb-2  border border-info rounded" asp-for="ClassId" onchange="GetStudents()">

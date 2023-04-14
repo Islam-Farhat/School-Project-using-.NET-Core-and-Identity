@@ -28,25 +28,6 @@
     <input asp-for="BirthDate" class="form-control my-2  justify-content-center" type="date" id="" placeholder="Birth Date">
     <span asp-validation-for="BirthDate" class="text-danger"></span>
 
-    @*<select asp-for="Gender" class="form-control my-2">
-        <option value="0" selected>Gender</option>
-        <option value="1">Male</option>
-        <option value="2">Female</option>
-    </select>
-    <span asp-validation-for="Gender" class="text-danger"></span>*@
-
-    @*<div class="form-group">
-        <label for="exampleFormControlFile1">Photo</label>
-        <input asp-for="Photo" type="file" class="form-control-file" id="exampleFormControlFile1">
-    </div>
-    <span asp-validation-for="Photo" class="text-danger"></span>
-
-    
-    <input asp-for="Password" class="form-control my-2  justify-content-center" type="password" id="" placeholder="Password">
-    <span asp-validation-for="Password" class="text-danger"></span>
-
-    <input asp-for="ConfirmPassword" class="form-control my-2  justify-content-center" type="password" id="" placeholder="Confirm password">
-    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>*@
     <select class="form-control my-2  justify-content-center" asp-for="levelID_fk" asp-items="levels"></select>
     <select class="form-control my-2  justify-content-center" asp-for="classID_fk" asp-items="classes"></select>
 
@@ -63,21 +44,6 @@
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
 }
 
-
-
-
-
-
-@*<form method="post" asp-action="EditStudent">
-    <div class="form-group">
-        <label asp-for="UserName">@Model.UserName</label>
-    </div>
-    <div class="form-group">
-        <select class="form-control" asp-for="levelID_fk" asp-items="levels"></select>
-        <select class="form-control" asp-for="classID_fk" asp-items="classes"></select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Edit</button>
-</form>*@

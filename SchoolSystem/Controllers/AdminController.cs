@@ -14,16 +14,24 @@ namespace SchoolSystem.Controllers
         private readonly IAdminRepository iadminRepository;
         private readonly IClassRepository iclassRepository;
         private readonly IlevelRepository ilevelRepository;
+        private readonly ILevelService _levelService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public AdminController(IAdminRepository iadminRepository, IClassRepository iclassRepository, IlevelRepository ilevelRepository, IWebHostEnvironment webHostEnvironment)
+        public AdminController(IAdminRepository iadminRepository, IClassRepository iclassRepository, IlevelRepository ilevelRepository, ILevelService levelService,IWebHostEnvironment webHostEnvironment)
         {
             this.iadminRepository = iadminRepository;
             this.iclassRepository = iclassRepository;
             this.ilevelRepository = ilevelRepository;
+            this._levelService = levelService;
             this._webHostEnvironment = webHostEnvironment;
         }
 
+        public IActionResult GetClassessByLevelID(int id)
+        {
+            List<Classes> classes = _levelService.GetLevelById(id).Classes;
+
+            return Json(classes);
+        }
         public IActionResult AddTeacher()
         {
             ViewBag.flag = false;
@@ -104,7 +112,7 @@ namespace SchoolSystem.Controllers
             student.Classes = await iclassRepository.GetClasses();
             return View(student);
         }
-        [HttpPost]
+        [HttpPost]  
         public IActionResult EditStudent(StudentViewModel studentVM, IFormFile Photo)
         {
             ModelState.Remove("Photo");
@@ -116,23 +124,23 @@ namespace SchoolSystem.Controllers
 
             if (ModelState.IsValid)
             {
-                string filename = string.Empty;
-                if (Photo != null)
-                {
-                    string uploads = Path.Combine(_webHostEnvironment.WebRootPath, "Images");
-                    filename = Photo.FileName;
-                    string fullpath = Path.Combine(uploads, filename);
-                    Photo.CopyTo(new FileStream(fullpath, FileMode.Create));
-                }
 
                 bool result = iadminRepository.UpdateStudent(studentVM);
                 if (result)
-                    return RedirectToAction("ShowStudentReports", "AttendanceController");
+                    return RedirectToAction("StudentsReports", "Teacher");
                     
             }
             return RedirectToAction("EditStudent");
         }
 
+        public async Task<IActionResult> DeleteStudent(string id)
+        {
+            if (ModelState.IsValid)
+            {
+               await iadminRepository.DeleteStudent(id);
+            }
+            return RedirectToAction("StudentsReports", "Teacher");
+        }
         //Level Actions
         public IActionResult AddLevel()
         {

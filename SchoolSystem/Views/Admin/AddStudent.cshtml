@@ -3,7 +3,7 @@
     ViewData["Title"] = "AddStudent";
     //Layout = "~/Views/Shared/_AdminLayout.cshtml";
     SelectList levels = new SelectList(Model.Levels, "Id", "Name");
-    SelectList classes = new SelectList(Model.Classes, "Id", "Name");
+    //SelectList classes = new SelectList(Model.Classes, "Id", "Name");
 }
 
 <form method="post" asp-action="AddStudent" enctype="multipart/form-data" class="shadow-lg border p-3 col-md-10 col-lg-6 offset-md-1 offset-lg-3 col-sm-12  ">
@@ -29,7 +29,6 @@
     <span asp-validation-for="BirthDate" class="text-danger"></span>
 
     <select asp-for="Gender" class="form-control my-2">
-        <option value="0" selected>Gender</option>
         <option value="1">Male</option>
         <option value="2">Female</option>
     </select>
@@ -41,8 +40,8 @@
     </div>
     <span asp-validation-for="Photo" class="text-danger"></span>
 
-    <select class="form-control my-2  justify-content-center" asp-for="levelID_fk" asp-items="levels"></select>
-    <select class="form-control my-2  justify-content-center" asp-for="classID_fk" asp-items="classes"></select>
+    <select class="form-control my-2  justify-content-center" asp-for="levelID_fk" asp-items="levels" onchange="GetLevelClasses()"></select>
+    <select class="form-control my-2  justify-content-center" asp-for="classID_fk"></select>
 
     <input asp-for="Password" class="form-control my-2  justify-content-center" type="password" id="" placeholder="Password">
     <span asp-validation-for="Password" class="text-danger"></span>
@@ -69,4 +68,23 @@
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function GetLevelClasses() {
+            var levelID = $("#levelID_fk").val();
+            $("#classID_fk").html("");
+            $.ajax({
+                url: "/Admin/GetClassessByLevelID",
+                data: { "id": levelID },
+                success: function (result) {
+                    //alert("!")
+                   // $("#ClassId").append("<option value='0'>--Select Class--</option>");
+                    for (let item of result) {
+                        $("#classID_fk").append("<option value=" + item.id + ">" + item.name + "</option>")
+
+                    }
+
+                }
+            });
+        }
+    </script>
 }

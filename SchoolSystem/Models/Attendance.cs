@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SchoolSystem.Models
 {
@@ -12,7 +13,7 @@ namespace SchoolSystem.Models
         public int Id { get; set; }
 
         public DateTime Date { get; set; } = DateTime.Now.Date;
-
+        [DisplayName("Attendance Status")]
         public AttendanceStatus AttendanceStatus { get; set;}
 
         [ForeignKey("ApplicationUser")]

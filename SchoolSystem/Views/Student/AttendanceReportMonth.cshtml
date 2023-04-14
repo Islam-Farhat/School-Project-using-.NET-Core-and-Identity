@@ -2,23 +2,47 @@
     ViewData["Title"] = "AttendanceReportMonth";
 }
 
-<h1>AttendanceReport</h1>
-<div class="container">
-    <form method="post" action="AttendanceReport">
-        <select class="form-control" name="month">
-            <option value="1">Jan</option>
-            <option value="2">Feb</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">Jun</option>
-            <option value="7">July</option>
-            <option value="8">Aug</option>
-            <option value="9">Sept</option>
-            <option value="10">Oct</option>
-            <option value="11">Nov</option>
-            <option value="12">Dec</option>
-        </select>
-        <input type="submit" value="View" />
-    </form>
+<h1>Attendance Report</h1>
+
+<hr />
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form >
+                <div class="form-group">
+                    <h4>Select Month to See Your Attendance</h4>
+                    <select class="form-control" id="month" name="month">
+                        <option value="1">Jan</option>
+                        <option value="2">Feb</option>
+                        <option value="3">March</option>
+                        <option value="4">April</option>
+                        <option value="5">May</option>
+                        <option value="6">Jun</option>
+                        <option value="7">July</option>
+                        <option value="8">Aug</option>
+                        <option value="9">Sept</option>
+                        <option value="10">Oct</option>
+                        <option value="11">Nov</option>
+                        <option value="12">Dec</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="View" onclick="GetData()" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="partial"></div>
 </div>
+<script>
+    function GetData() {
+        month = $("#month").Value
+        event.preventDefault()
+        $.ajax({
+            url: "AttendanceReport/" +month,
+            success: function (res) {
+                $("#partial").html(res);
+            }
+        });
+    }
+</script>

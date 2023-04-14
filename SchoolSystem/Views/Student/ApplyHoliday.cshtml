@@ -4,12 +4,14 @@
     ViewData["Title"] = "ApplyHoliday";
 }
 
-<h1>ApplyHoliday</h1>
-
-<h4>HolidayViewModel</h4>
+<h1>Apply for Holiday</h1>
+<div>
+    <a asp-action="ViewHolidays">Back to List</a>
+</div>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+
+    <div class="col-md-4 p-5 bg-white mt-5 shadow-lg">
         <form asp-action="ApplyHoliday">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -28,13 +30,12 @@
                 <span asp-validation-for="StartDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Apply" class="btn btn-primary" />
             </div>
         </form>
     </div>
+
 </div>
 
-<div>
-    <a asp-action="ViewHolidays">Back to List</a>
-</div>
+
 

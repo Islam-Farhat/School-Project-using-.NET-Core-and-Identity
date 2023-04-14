@@ -11,6 +11,8 @@ namespace SchoolSystem.ViewModels
         public string Name { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
+        [NotMapped]
+        public string? Filename { get; set; }
 
         [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Please enter valid phone no.")]
         public string Phone { get; set; }

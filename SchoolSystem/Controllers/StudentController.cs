@@ -24,7 +24,6 @@ namespace SchoolSystem.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly string testUserId = "8c05fd9d-cd61-4124-893a-c97657c8a17a";
        
         public StudentController (SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,IClassService classService,
@@ -48,11 +47,11 @@ namespace SchoolSystem.Controllers
         { 
             return View();
         }
-        public IActionResult AttendanceReport()
+        public IActionResult AttendanceReport(int month)
         {
-            int month = int.Parse(Request.Form["month"]);
-            List<Attendance> attendances = _attendanceService.GetAttendacesByStdId(testUserId, month);
-            return View(attendances);
+            
+            List<Attendance> attendances = _attendanceService.GetAttendacesByStdId(User.FindFirstValue(ClaimTypes.NameIdentifier), month);
+            return PartialView(attendances);
         }
         public IActionResult SendFeedback()
         {
@@ -64,7 +63,7 @@ namespace SchoolSystem.Controllers
             if (ModelState.IsValid)
             {
                 Feedback feedback=new Feedback();
-                feedback.userID_fk= testUserId;
+                feedback.userID_fk= User.FindFirstValue(ClaimTypes.NameIdentifier);
                 feedback.FeedbackText = feedbackVM.FeedbackTxt;
                 _feedbackRepository.Insert(feedback);
                 _feedbackRepository.Save();
@@ -74,7 +73,7 @@ namespace SchoolSystem.Controllers
         }
         public IActionResult ViewFeedbacks()
         {
-            var feedbacks = _feedbackRepository.GetAll().Where(f=>f.userID_fk==testUserId).ToList();
+            var feedbacks = _feedbackRepository.GetAll().Where(f=>f.userID_fk== User.FindFirstValue(ClaimTypes.NameIdentifier)).ToList();
             return View(feedbacks);
         }
         public IActionResult DeleteFeedback(int id)
@@ -113,7 +112,7 @@ namespace SchoolSystem.Controllers
             if (ModelState.IsValid)
             {
                 Holiday holiday = new Holiday();
-                holiday.userID_fk = testUserId;
+                holiday.userID_fk = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 holiday.StartDate=holidayVM.StartDate;
                 holiday.DaysNum = holidayVM.DaysNum;
                 holiday.Reason = holidayVM.Reason;
@@ -127,7 +126,7 @@ namespace SchoolSystem.Controllers
 
         public IActionResult ViewHolidays()
         {
-            var holidays = _holidayRepository.GetAll().Where(h=>h.userID_fk == testUserId).ToList();
+            var holidays = _holidayRepository.GetAll().Where(h=>h.userID_fk == User.FindFirstValue(ClaimTypes.NameIdentifier)).ToList();
             return View(holidays);
         }
         public IActionResult DeleteHoliday(int id)
@@ -175,6 +174,7 @@ namespace SchoolSystem.Controllers
             studentProfileVM.Address =student.Address;
             studentProfileVM.Phone = student.PhoneNumber;
             studentProfileVM.Email = student.Email;
+            studentProfileVM.Filename = student.photoUrl;
           
             return View(studentProfileVM);
         }
@@ -218,7 +218,7 @@ namespace SchoolSystem.Controllers
         {
             if (ModelState.IsValid)
             {
-                ApplicationUser student = await _userRepo.GetStudentByIdAsync(testUserId);
+                ApplicationUser student = await _userRepo.GetStudentByIdAsync(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var result = await _userManager.ChangePasswordAsync(student, updatePasswordVM.OldPassword, updatePasswordVM.NewPassword);
                 if (result.Succeeded)
                 {

@@ -113,7 +113,7 @@ namespace SchoolSystem.Controllers
             return View(student);
         }
         [HttpPost]  
-        public IActionResult EditStudent(StudentViewModel studentVM, IFormFile Photo)
+        public async Task<IActionResult> EditStudent(StudentViewModel studentVM, IFormFile Photo)
         {
             ModelState.Remove("Photo");
             ModelState.Remove("Gender");
@@ -125,7 +125,7 @@ namespace SchoolSystem.Controllers
             if (ModelState.IsValid)
             {
 
-                bool result = iadminRepository.UpdateStudent(studentVM);
+                bool result = await iadminRepository.UpdateStudent(studentVM);
                 if (result)
                     return RedirectToAction("StudentsReports", "Teacher");
                     

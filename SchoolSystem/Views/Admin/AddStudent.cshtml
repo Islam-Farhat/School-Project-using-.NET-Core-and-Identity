@@ -24,7 +24,7 @@
 
     <textarea asp-for="Address" class="form-control " id="" cols="30" rows="2" placeholder="Address"></textarea>
     <span asp-validation-for="Address" class="text-danger"></span>
-
+    <label asp-for="BirthDate"></label>
     <input asp-for="BirthDate" class="form-control my-2  justify-content-center" type="date" id="" placeholder="Birth Date">
     <span asp-validation-for="BirthDate" class="text-danger"></span>
 
@@ -39,8 +39,9 @@
         <input asp-for="Photo" type="file" class="form-control-file" id="exampleFormControlFile1">
     </div>
     <span asp-validation-for="Photo" class="text-danger"></span>
-
+    <label >Level</label>
     <select class="form-control my-2  justify-content-center" asp-for="levelID_fk" asp-items="levels" onchange="GetLevelClasses()"></select>
+    <label >Class</label>
     <select class="form-control my-2  justify-content-center" asp-for="classID_fk"></select>
 
     <input asp-for="Password" class="form-control my-2  justify-content-center" type="password" id="" placeholder="Password">

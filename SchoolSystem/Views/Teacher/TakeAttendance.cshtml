@@ -1,9 +1,11 @@
 ﻿@model List<ApplicationUser>
 
 <form asp-action="TakeAttendance" method="post">
-    <table class="table">
-        <thead>
+    <table class="table bg-white table-hover ">
+       
+        <thead style="background-color : #003049 " class="text-white">
             <tr>
+                <th scope="col">Image</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Attendance</th>
@@ -13,6 +15,7 @@
             @foreach (var student in Model)
             {
                 <tr>
+                    <td><img class="rounded-circle" witdth="100px" height="50px" src="/Images/@student.photoUrl" /></td>
                     <td>@student.Name</td>
                     <td>@student.Email</td>
                     <td>
@@ -28,6 +31,7 @@
             }
         </tbody>
     </table>
-
-    <button type="submit" class="btn btn-primary">Save Attendance</button>
+    <div class=" form-group text-center">
+        <button type="submit" class="btn btn-warning form-control w-50 mt-2 ">Save</button>
+    </div>
 </form>

@@ -51,6 +51,9 @@
     </tbody>
 </table>
 @section Scripts {
+    <script src="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">
+
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
@@ -128,21 +131,38 @@
             });
         }
         function Delete(id) {
-            var dlt = confirm("Are you sure.?! ");
-            if (dlt) {
-                $.ajax({
-                    url: "/Admin/DeleteClass?id=" + id,
-                    type: "POST",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    success: function (result) {
-                        GetAllClasses();
-                    },
-                    error: function (errormessage) {
-                        alert(errormessage.responseText);
-                    }
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+                function () {
+                    $.ajax({
+                        url: "/Admin/DeleteClass?id=" + id,
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "success") {
+                                GetAllClasses();
+                                swal("Deleted!", "Your Class deleted successfully.", "success");
+
+                            }
+                            else {
+                                sweetAlert("Oops...", "here is student has this Class", "error");
+                            }
+                        },
+                        error: function (errormessage) {
+                            alert(errormessage.responseText);
+                        }
+                    });
                 });
-            }
+                
+            
         }
     </script>
 }

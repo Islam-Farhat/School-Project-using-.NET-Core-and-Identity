@@ -45,6 +45,10 @@
 </table>
 
 @section Scripts {
+
+    <script src="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://common.olemiss.edu/_js/sweet-alert/sweet-alert.css">
+
     <script src="/lib/jquery/dist/jquery.min.js"></script>
     <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
@@ -114,22 +118,40 @@
                 }
             });
         }
+
         function Delete(id) {
-            var dlt = confirm("Are you sure.?! ");
-            if (dlt) {
-                $.ajax({
-                    url: "/Admin/DeleteLevel?id=" + id,
-                    type: "POST",
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
-                    success: function (result) {
-                        GetAllLevels();
-                    },
-                    error: function (errormessage) {
-                        alert(errormessage.responseText);
-                    }
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            },
+                function () {
+                    $.ajax({
+                        url: "/Admin/DeleteLevel?id=" + id,
+                        type: "POST",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: "json",
+                        success: function (result) {
+                            if (result == "success") {
+                                GetAllLevels();
+                                swal("Deleted!", "Your level deleted successfully.", "success");
+
+                            }
+                            else {
+                                sweetAlert("Oops...", "There is student has this level", "error");
+                            }
+                        },
+                        error: function (errormessage) {
+                            alert(errormessage.responseText);
+                        }
+                    });
                 });
-            }
+                
+            
         }
     </script>
 }

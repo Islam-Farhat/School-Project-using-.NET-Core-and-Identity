@@ -37,7 +37,7 @@ namespace SchoolSystem.Repository
 
         public Classes GetClassByID(int? id)
         {
-            return context.Classes.Where(x => x.Id == id).FirstOrDefault();
+            return context.Classes.Where(x => x.Id == id).FirstOrDefault()!;
         }
         public async Task<List<Classes>> GetClasses()
         {
@@ -69,7 +69,7 @@ namespace SchoolSystem.Repository
         {
             try
             {
-                Classes clas = context.Classes.Where(x => x.Id == id).FirstOrDefault();
+                Classes clas = context.Classes.Where(x => x.Id == id).FirstOrDefault()!;
                 context.Classes.Remove(clas);
                 context.SaveChanges();
                 return true;

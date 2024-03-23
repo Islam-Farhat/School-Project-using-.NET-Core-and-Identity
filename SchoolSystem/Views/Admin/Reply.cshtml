@@ -1,0 +1,34 @@
+﻿@model FeedbackVM
+@{
+    ViewData["Title"] = "Replay";
+    //Layout = null;
+}
+
+
+
+
+
+<form asp-action="Reply" class="border p-3 col-md-10 col-lg-8 offset-md-1 offset-lg-3 col-sm-12  mt-1 shadow-lg w-50">
+   <div class="text-center">
+        <h1 style=" color:#262A56; ">Reply</h1>
+
+   </div>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+        <label asp-for="Response" style=" color:#B8621B; font-size:large;"></label>
+                <input asp-for="Response" class="form-control" />
+                <span asp-validation-for="Response" class="text-danger"></span>
+            </div>
+            
+    <div class=" form-group text-center">
+        <input  class="btn   w-50 text-light" style="background-color:#FFA559; " type="submit" value="Reply" />
+
+    </div>
+        </form>
+
+
+@section Scripts {
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

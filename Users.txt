@@ -1,0 +1,15 @@
+Admins
+
+Admin
+Loma1@#$
+-----------------------------
+Students
+
+student
+Loma1@#$
+
+----------------------------
+Teachers
+
+teacher
+Loma1@#$

@@ -1,0 +1,74 @@
+﻿@model List<FeedbackVM>
+@{
+    int i = 0;
+    ViewData["Title"] = "Feedback";
+    //Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="p-4 border my-5 shadow border " style="border-color:#FF6000" >
+    <h3 class=" my-3  " style=" color:#262A56">Complains Report</h3>
+    <h5 class=" my-3 alert-secondary p-3" style=" color:#B8621B">Total complains <span>1</span> </h5>
+
+    <form method="post" asp-action="Feedback">
+        <div class="row my-3">
+            <table class="table overflow-hidden border">
+                <thead style="background-color:#E3CCAE;">
+                    <tr>
+
+                        <th scope="col border">#</th>
+                        <th scope="col border">Student name</th>
+                        <th scope="col border">Complain</th>
+                        <th scope="col border">Reply</th>
+                        <th scope="col border"></th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!-- row for loop -->
+                    @foreach (var item in Model)
+                    {
+                        i++;
+                        <tr>
+                            <td class="py-3 lead border" style="vertical-align: middle !important;" scope="row">
+                                @i
+                            </td>
+                            <td class="py-3 lead border" style="vertical-align: middle !important;" scope="row">
+                                @item.StudentName
+                            </td>
+                            
+                            <td class="py-3 lead border" style="vertical-align: middle !important;" scope="row">
+                                @item.FeedbackText
+                            </td>
+                            <td class="py-3 lead border" style="vertical-align: middle !important;" scope="row">
+                               @{
+                                   if (item.Response== null)
+                                    {
+                                        <span id="status">pending</span>
+                                    }
+                                    else
+                                    {
+                                        <span id="status">@item.Response</span>
+                                    }
+                                }
+                                <div id="reply" style="display:none;">
+                                    <textarea class="form-control btn-outline-danger" name="" cols="30" rows="3" style="resize: none;"></textarea>
+                                    <button class="btn btn-danger my-2" value="" name="">Send reply</button>
+                                </div>
+                            </td>
+                            <td class="py-3 lead border" style="vertical-align: middle !important;" scope="row">
+                                <a id="btnReply" class="btn btn-danger" href="/Admin/Reply/@item.Id">Reply</a>
+                            </td>
+
+                        </tr>
+                    }
+                    <!-- end of row -->
+                </tbody>
+            </table>
+
+        </div>
+        ☺
+    </form>
+</div>
+
